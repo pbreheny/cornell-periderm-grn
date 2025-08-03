@@ -1,0 +1,43 @@
+#!/usr/bin/env Rscript
+r"(Usage: batch-lasso [options] <method> <data> <prior> <strength> <alpha>
+
+Submit multiple lasso jobs via qbatch. All arguments can have commas, which loop.
+Also, arguments can be "all", which mean loop over "everything" (see code).
+
+Arguments:
+  method     Graphical lasso (gl) or miraldi-style lasso (mir)? [string]
+  data       Which data to use? 'fns25' = farrel none shield, 25% filter. import_expr() [string]
+  prior      Which prior to use? See import_prior() [string]
+  strength   Strength of prior in lasso model [number]
+  alpha      Elastic net parameter times 100 [number]
+
+Options:
+  --ppj=<n>  Number of processors per job [default: 1]
+)" -> doc
+suppressMessages(library(docopt))
+opt <- docopt(doc)
+
+# Process "all" options
+if (opt$method == 'all') opt$method <- 'gl,mir'
+if (opt$data == 'all') opt$data <- 'fns25,kna25'
+if (opt$prior == 'all') opt$prior <- 'atac,h3k,scat,mall,mspc'
+if (opt$strength == 'all') opt$strength <- '0,1,2,4,8'
+if (opt$alpha == 'all') opt$alpha <- '50,100'
+
+# Create qbatch job list
+if (file.exists('qbatch-jobs.txt')) invisible(file.remove('qbatch-jobs.txt'))
+for (i in stringr::str_split(opt$method, ',')[[1]]) {
+  for (j in stringr::str_split(opt$data, ',')[[1]]) {
+    for (k in stringr::str_split(opt$prior, ',')[[1]]) {
+      for (l in stringr::str_split(opt$strength, ',')[[1]]) {
+        for (m in stringr::str_split(opt$alpha, ',')[[1]]) {
+          cat('bin/lasso', i, j, k, l, m, '\n', file='qbatch-jobs.txt', append=TRUE)
+        }
+      }
+    }
+  }
+}
+
+
+# Run qbatch
+system(paste0('qbatch -q BIOSTAT --ppj ', opt$ppj, ' qbatch-jobs.txt'))

@@ -1,0 +1,36 @@
+#!/usr/bin/env Rscript
+"Fit a single lasso model
+
+Usage: lasso <method> <data> <prior> <strength> <alpha>
+
+Example: lasso gl kna20 mc2 1 50
+
+Arguments:
+  method     Graphical lasso (gl) or miraldi-style lasso (mir)? [string]
+  data       Which data to use? 'fns' = farrel none shield. import_expr() [string]
+  prior      Which prior to use? See import_prior() [string]
+  strength   Strength of prior in lasso model [number]
+  alpha      Elastic net parameter times 100 [number between 0 and 100]
+" -> doc
+suppressMessages(library(docopt))
+opt <- docopt(doc)
+devtools::load_all()
+# For interactive use:
+# opt <- list(method='gl', data='kna25', prior='mc2', strength='2', alpha='75')
+
+# Read in data
+source <- switch(substr(opt$data, 1, 1), f='farrell', k='kenny')
+preprocess <- switch(substr(opt$data, 2, 2), n='none', i='imp', c='ccr', b='both')
+subset <- switch(substr(opt$data, 3, 3), a='all', s='shield')
+filter <- as.numeric(substr(opt$data, 4, 5))/100
+Data <- import_expr(source, preprocess, subset, filter)
+Prior <- import_prior(opt$prior, Data)
+
+# Fit networks
+if (opt$method == 'gl') {
+  fn <- glue("data/network/gl/{opt$data}-{opt$prior}-s{sprintf('%0.3d', as.integer(100*as.numeric(opt$strength)))}-a{sprintf('%1$03d', as.integer(opt$alpha))}.rds")
+  fit_glasso_network(Data, Prior, fn, strength=as.numeric(opt$strength), alpha=as.numeric(opt$alpha)/100)
+} else {
+  fn <- paste0('data/network/mir/', opt$data, '-', opt$prior, '-s', opt$strength, '.rds')
+  fit_stability_network(Data, Prior, fn, strength=as.numeric(opt$strength))
+}

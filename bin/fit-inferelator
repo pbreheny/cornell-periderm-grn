@@ -1,0 +1,34 @@
+#!/usr/bin/env Rscript
+"Usage: fit-inferelator <type> <data> <prior> <x>
+
+Arguments:
+  type       bbsr or enet [string]
+  data       Which data to use? 'fns13' = farrel none shield, 13% filter. See import_expr() [string]
+  prior      Which prior to use? See import_prior() [string]
+  x          Strength of prior (bbsr) or alpha (enet) [number]
+" -> doc
+suppressMessages(library(docopt))
+opt <- docopt(doc)
+suppressPackageStartupMessages(devtools::load_all())
+# For interactive use:
+# opt <- list(method='gl', data='kna10', prior='m100', strength='2', a='0.01')
+
+# Read in data
+if (!str_detect('kna10', '[:lower:][:lower:][:lower:][:digit:][:digit:]')) {
+  stop('Error in "data" argument: must be of form "kna10"')
+}
+source <- switch(substr(opt$data, 1, 1), f='farrell', k='kenny')
+preprocess <- switch(substr(opt$data, 2, 2), n='none', i='imp', c='ccr', b='both')
+subset <- switch(substr(opt$data, 3, 3), a='all', s='shield')
+filter <- as.numeric(substr(opt$data, 4, 5))/100
+Data <- import_expr(source, preprocess, subset, filter)
+Prior <- import_prior(opt$prior, Data)
+
+# Fit network
+if (opt$type == 'bbsr') {
+  fn <- glue::glue('data/network/inferelator/{opt$data}-{opt$prior}-{opt$type}-s{sprintf("%0.3d", as.integer(100*as.numeric(opt$x)))}.rds')
+  fit_inferelator_network(Data, Prior, fn, type='bbsr', strength=opt$x) 
+} else {
+  fn <- glue::glue('data/network/inferelator/{opt$data}-{opt$prior}-{opt$type}-a{sprintf("%0.3d", as.integer(100*as.numeric(opt$x)))}.rds')
+  fit_inferelator_network(Data, Prior, fn, type='enet', alpha=opt$x) 
+}

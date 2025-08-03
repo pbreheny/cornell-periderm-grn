@@ -1,0 +1,15 @@
+.DS_Store
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+data/*/*
+!data/.dat/config
+docs/
+explore/*.csv
+explore/*.pdf
+explore/*.txt
+man/
+*.pdf
+.snakemake
+.r-installed

@@ -1,0 +1,26 @@
+Package: peridermgrn
+Title: What the Package Does Using Title Case
+Version: 1.3.0
+Authors@R: c(
+  person("Patrick", "Breheny", role=c("aut","cre"), email="patrick-breheny@uiowa.edu", comment=c(ORCID="000-0002-0650-1119")),
+  person("Annika", "Helverson", , "first.last@example.com", role = c("aut"), comment = c(ORCID = "YOUR-ORCID-ID")))
+Description: More details about what the package does.
+BugReports: http://github.com/pbreheny/lasso-grn/issues
+Depends:
+  R (>= 3.5.0),
+  ashr,
+  data.table,
+  glmnet,
+  glue,
+  ggplot2,
+  ggraph,
+  igraph,
+  magrittr,
+  ncvreg,
+  stringr
+Imports: AnnotationDbi, crayon, devtools, DESeq2, ggbeeswarm, readxl, shadowtext, tinytest
+License: GPL-3
+VignetteBuilder: knitr
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.0

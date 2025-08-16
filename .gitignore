@@ -3,13 +3,8 @@
 .Rhistory
 .RData
 .Ruserdata
-data/*/*
-!data/.dat/config
+data/network
 docs/
-explore/*.csv
-explore/*.pdf
-explore/*.txt
-man/
-*.pdf
 .snakemake
 .r-installed
+.*-complete

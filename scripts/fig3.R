@@ -1,17 +1,18 @@
-# Figure 3
+#' Create figure 3
 devtools::load_all(quiet = TRUE)
 library(superheat)
 library(ggplotify)
 library(ggpubr)
 library(MetBrewer)
 
+# Import enrichment
 enr <- import_enr()
-targets <- readxl::read_excel('./data/raw/TargetGenes_EVL_TRN_Full-Weak-StrongFiltered.xlsx', range = "A1:A3788") %>%
-  as.vector() %>%
-  unlist() %>%
+targets <- './data/raw/TargetGenes_EVL_TRN_Full-Weak-StrongFiltered.xlsx' |>
+  readxl::read_excel(range = "A1:A3788") |>
+  as.vector() |>
+  unlist() |>
   unique()
 N <- round(0.25 * length(targets))
-
 
 # KO gold standards
 cebpb_KO_gs <- make_gs('data/knockout/cebpb_KO.rds', metric = 'lfsr',
@@ -36,18 +37,21 @@ klf6a_KO_gs <- make_gs('data/knockout/klf6a_KO.rds', metric = 'lfsr',
                        selectby = 'N', threshold = N, targets = targets)
 grhl1_KO_gs <- make_gs('data/knockout/grhl1_KO.rds', metric = 'lfsr',
                        selectby = 'N', threshold = N, targets = targets)
+
 # chip gold standards
 irf6_chip100kb_gs <- make_gs('data/chip/irf6_chip_100kb.rds', targets = targets)
 grhl3_chip100kb_gs <- make_gs('data/chip/grhl3_chip_100kb.rds', targets = targets)
 tfap2a_chip100kb_gs <- make_gs('data/chip/tfap2a_chip_100kb.rds', targets = targets)
+
 # chip + ko combined gold standards
 irf6_combo_100kb_gs <- combine_gs(irf6_chip100kb_gs, irf6_KO_gs)
 grhl3_combo_100kb_gs <- combine_gs(grhl3_chip100kb_gs, grhl3_KO_gs)
 tfap2a_combo_100kb_gs <- combine_gs(tfap2a_chip100kb_gs, tfap2a_KO_gs)
 
-## PR data tables ##
-### combined chip+ko data ###
-# entry for every network in gl-a001, wgcna, inferelator, and genie, collapsed over all TFs
+# --- PR data tables ----------------------------
+# Combine chip + ko data
+
+# Entry for every network in gl-a001, wgcna, inferelator, and genie, collapsed over all TFs
 pr_combo <- combine_pr(
   gs = list(
     irf6_combo_100kb_gs,
@@ -77,6 +81,7 @@ pr_combo <- combine_pr(
     ),
   collapse = TRUE
 )
+
 # entry for every network in gl-a001, wgcna, inferelator, and genie, separate for each TF
 pr_combo_sep <- combine_pr(
   gs = list(

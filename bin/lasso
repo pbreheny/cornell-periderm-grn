@@ -14,7 +14,7 @@ Arguments:
 " -> doc
 suppressMessages(library(docopt))
 opt <- docopt(doc)
-devtools::load_all()
+devtools::load_all(quiet = TRUE)
 # For interactive use:
 # opt <- list(method='gl', data='kna25', prior='mc2', strength='2', alpha='0.75')
 
@@ -27,6 +27,7 @@ Data <- import_expr(source, preprocess, subset, filter)
 Prior <- import_prior(opt$prior, Data)
 
 # Fit networks
+if (!dir.exists("data/network/gl")) dir.create("data/network/gl", recursive = TRUE)
 s_id <- sprintf('%0.3d', as.integer(100 * as.numeric(opt$strength)))
 a_id <- sprintf('%0.3d', as.integer(100 * as.numeric(opt$alpha)))
 if (opt$method == 'gl') {

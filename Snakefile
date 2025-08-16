@@ -19,7 +19,7 @@ rule fig3:
     input:
         ".r-installed",
         expand(
-            "data/network/gl/kna10-mc2-s{gls}_a{gla}.rds",
+            "data/network/gl/kna10-mc2-s{gls}-a{gla}.rds",
             gls = [s for s, _ in gl_grid],
             gla = [a for _, a in gl_grid]
         ),
@@ -44,7 +44,7 @@ rule glasso:
     input:
         ".r-installed"
     output:
-        "data/network/gl/kna10-mc2-s{gls}_a{gla}.rds"
+        "data/network/gl/kna10-mc2-s{gls}-a{gla}.rds"
     params:
         gls_dec = lambda wildcards: float(wildcards.gls) / 100,
         gla_dec = lambda wildcards: float(wildcards.gla) / 100

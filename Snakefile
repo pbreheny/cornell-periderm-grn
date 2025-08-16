@@ -1,3 +1,14 @@
+# --- Global configuration -----------------------
+
+from itertools import product
+
+strength = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]
+alpha = [0.01, 0.25, 0.50, 0.75, 1]
+
+grid = list(product(strength, alpha))
+
+# --- Rules --------------------------------------
+
 rule all:
     input:
         "figs/fig3.pdf",
@@ -26,8 +37,13 @@ rule fig6:
     script: "scripts/fig6.R"
 
 rule glasso:
-    output: "data/network/gl/.gl-complete"
-    shell: "bin/batch-lasso gl kna10 mc2 0,0.5,1,1.5,2,2.5,3,3.5,4 1,25,50,75,100"
+    input:
+        ".r-installed"
+    output:
+        touch("data/network/gl/.gl-complete")
+    run:
+        for strength, alpha in grid:
+            shell(f"bin/lasso gl kna10 mc2 {strength} {alpha}")
 
 rule inferelator_bbsr:
     output: "data/network/inferelator/.bbsr-complete"

@@ -2,10 +2,10 @@
 
 from itertools import product
 
-strength = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4]
-alpha = [0.01, 0.25, 0.50, 0.75, 1]
-
-grid = list(product(strength, alpha))
+# strength and alpha are multiplied by 100 here to avoid . in filenames
+strength = ["000", "050", "100", "150", "200", "250", "300", "350", "400"]
+alpha = ["001", "025", "050", "075", "100"]
+gl_grid = list(product(strength, alpha))
 
 # --- Rules --------------------------------------
 
@@ -18,7 +18,11 @@ rule all:
 rule fig3:
     input:
         ".r-installed",
-        "data/network/gl/.gl-complete",
+        expand(
+            "data/network/gl/kna10-mc2-s{gls}_a{gla}.rds",
+            gls = [s for s, _ in gl_grid],
+            gla = [a for _, a in gl_grid]
+        ),
         "data/network/inferelator/.bbsr-complete",
         "data/network/inferelator/.enet-complete"
     output: "figs/fig3.pdf"
@@ -40,10 +44,12 @@ rule glasso:
     input:
         ".r-installed"
     output:
-        touch("data/network/gl/.gl-complete")
-    run:
-        for strength, alpha in grid:
-            shell(f"bin/lasso gl kna10 mc2 {strength} {alpha}")
+        "data/network/gl/kna10-mc2-s{gls}_a{gla}.rds"
+    params:
+        gls_dec = lambda wildcards: float(wildcards.gls) / 100,
+        gla_dec = lambda wildcards: float(wildcards.gla) / 100
+    shell:
+        "bin/lasso gl kna10 mc2 {params.gls_dec} {params.gla_dec}"
 
 rule inferelator_bbsr:
     output: "data/network/inferelator/.bbsr-complete"

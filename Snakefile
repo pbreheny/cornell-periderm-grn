@@ -84,6 +84,7 @@ rule setup_r:
     script: "scripts/setup-r.R"
 
 rule setup_inferelator:
-    output: ".inferelator-installed"
-    shell: "python3 -m pip install inferelator"
-
+    output:
+        touch(".inferelator-installed")
+    shell:
+        "python3 -m pip install inferelator && touch {output}"

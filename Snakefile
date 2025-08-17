@@ -23,10 +23,18 @@ rule fig3:
             gls = [s for s, _ in gl_grid],
             gla = [a for _, a in gl_grid]
         ),
-        "data/network/inferelator/.bbsr-complete",
-        "data/network/inferelator/.enet-complete"
-    output: "figs/fig3.pdf"
-    script: "scripts/fig3.R"
+        expand(
+            "data/network/inferelator/kna10-mc2-bbsr-s{bbsrs}.rds",
+            bbsrs = [s for s in strength]
+        ),
+        expand(
+            "data/network/inferelator/kna10-mc2-enet-a{eneta}.rds",
+            eneta = [a for a in alpha]
+        )
+    output:
+        "figs/fig3.pdf"
+    script:
+        "scripts/fig3.R"
 
 rule fig5:
     input:
@@ -52,12 +60,20 @@ rule glasso:
         "bin/lasso gl kna10 mc2 {params.gls_dec} {params.gla_dec}"
 
 rule inferelator_bbsr:
-    output: "data/network/inferelator/.bbsr-complete"
-    shell: "bin/batch-inferelator --ppj=2 bbsr kna10 mc2 0,0.5,1,1.5,2,2.5,3,3.5,4"
+    output:
+        "data/network/inferelator/kna10-mc2-bbsr-s{bbsrs}.rds"
+    params:
+        bbsrs_dec = lambda wildcards: float(wildcards.bbsrs) / 100,
+    shell:
+        "bin/fit-inferelator bbsr kna10 mc2 {params.bbsrs_dec}"
 
 rule inferelator_enet:
-    output: "data/network/inferelator/.enet-complete"
-    shell: "bin/batch-inferelator --ppj=2 enet kna10 mc2 0.01,0.25,0.50,0.75,1"
+    output:
+        "data/network/inferelator/kna10-mc2-enet-a{eneta}.rds"
+    params:
+        eneta_dec = lambda wildcards: float(wildcards.eneta) / 100,
+    shell:
+        "bin/fit-inferelator enet kna10 mc2 {params.eneta_dec}"
 
 rule setup_r:
     output: ".r-installed"

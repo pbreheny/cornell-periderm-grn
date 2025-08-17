@@ -85,5 +85,5 @@ rule setup_r:
 
 rule setup_inferelator:
     output: ".inferelator-installed"
-    shell: "python -m pip install inferelator"
+    shell: "python3 -m pip install inferelator"
 

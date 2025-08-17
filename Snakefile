@@ -60,6 +60,8 @@ rule glasso:
         "bin/lasso gl kna10 mc2 {params.gls_dec} {params.gla_dec}"
 
 rule inferelator_bbsr:
+    input:
+        ".inferelator-installed"
     output:
         "data/network/inferelator/kna10-mc2-bbsr-s{bbsrs}.rds"
     params:
@@ -68,6 +70,8 @@ rule inferelator_bbsr:
         "bin/fit-inferelator bbsr kna10 mc2 {params.bbsrs_dec}"
 
 rule inferelator_enet:
+    input:
+        ".inferelator-installed"
     output:
         "data/network/inferelator/kna10-mc2-enet-a{eneta}.rds"
     params:
@@ -78,4 +82,8 @@ rule inferelator_enet:
 rule setup_r:
     output: ".r-installed"
     script: "scripts/setup-r.R"
+
+rule setup_inferelator:
+    output: ".inferelator-installed"
+    script: "python -m pip install inferelator"
 

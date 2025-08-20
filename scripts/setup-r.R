@@ -14,6 +14,8 @@ required_packages <- c(
   "magrittr",
   "ncvreg",
   "stringr"
+  "AnnotationDbi",
+  "DESeq2"
 )
 pak::pkg_install(required_packages)
 file.create(".r-installed")

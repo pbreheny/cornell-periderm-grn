@@ -7,4 +7,4 @@ data/network
 docs/
 .snakemake
 .r-installed
-.*-complete
+.inferelator-installed

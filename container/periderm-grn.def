@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: bioconductor/bioconductor_docker:RELEASE_3_23
+From: bioconductor/r-ver:3.23
 
 %post
     Rscript -e 'install.packages(c(

@@ -1,11 +1,14 @@
-# --- Global configuration -----------------------
-
+container: "container/periderm-grn.sif"
 from itertools import product
+
+
+# --- Global configuration -----------------------
 
 # strength and alpha are multiplied by 100 here to avoid . in filenames
 strength = ["000", "050", "100", "150", "200", "250", "300", "350", "400"]
 alpha = ["001", "025", "050", "075", "100"]
 gl_grid = list(product(strength, alpha))
+
 
 # --- Rules --------------------------------------
 
@@ -17,7 +20,6 @@ rule all:
 
 rule fig3:
     input:
-        ".r-installed",
         expand(
             "data/network/gl/kna10-mc2-s{gls}-a{gla}.rds",
             gls = [s for s, _ in gl_grid],
@@ -37,20 +39,14 @@ rule fig3:
         "scripts/fig3.R"
 
 rule fig5:
-    input:
-        ".r-installed"
     output: "figs/fig5.pdf"
     script: "scripts/fig5.R"
 
 rule fig6:
-    input:
-        ".r-installed"
     output: "figs/fig6.pdf"
     script: "scripts/fig6.R"
 
 rule glasso:
-    input:
-        ".r-installed"
     output:
         "data/network/gl/kna10-mc2-s{gls}-a{gla}.rds"
     params:
@@ -60,8 +56,6 @@ rule glasso:
         "bin/lasso gl kna10 mc2 {params.gls_dec} {params.gla_dec}"
 
 rule inferelator_bbsr:
-    input:
-        ".inferelator-installed"
     output:
         "data/network/inferelator/kna10-mc2-bbsr-s{bbsrs}.rds"
     params:
@@ -70,21 +64,9 @@ rule inferelator_bbsr:
         "bin/fit-inferelator bbsr kna10 mc2 {params.bbsrs_dec}"
 
 rule inferelator_enet:
-    input:
-        ".inferelator-installed"
     output:
         "data/network/inferelator/kna10-mc2-enet-a{eneta}.rds"
     params:
         eneta_dec = lambda wildcards: float(wildcards.eneta) / 100,
     shell:
         "bin/fit-inferelator enet kna10 mc2 {params.eneta_dec}"
-
-rule setup_r:
-    output: ".r-installed"
-    script: "scripts/setup-r.R"
-
-rule setup_inferelator:
-    output:
-        touch(".inferelator-installed")
-    shell:
-        "python3 -m pip install inferelator && touch {output}"

@@ -1,0 +1,28 @@
+Bootstrap: docker
+From: bioconductor/bioconductor_docker:RELEASE_3_23
+
+%post
+    Rscript -e 'install.packages(c(
+        "ashr",
+        "data.table",
+        "glmnet",
+        "glue",
+        "ggplot2",
+        "ggraph",
+        "igraph",
+        "ncvreg",
+        "stringr",
+        "BiocManager"
+        ), repos = "https://cloud.r-project.org"
+    )'
+    Rscript -e 'BiocManager::install(c(
+        "AnnotationDbi",
+        "DESeq2"
+    ))'
+
+    python3 -m venv /opt/venv
+    /opt/venv/bin/pip install docopt inferelator
+
+
+%environment
+    export PATH=/opt/venv/bin:$PATH

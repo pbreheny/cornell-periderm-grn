@@ -60,7 +60,7 @@ rule glasso:
         gls_dec = lambda wildcards: float(wildcards.gls) / 100,
         gla_dec = lambda wildcards: float(wildcards.gla) / 100
     shell:
-        "bin/lasso gl kna10 mc2 {params.gls_dec} {params.gla_dec}"
+        "scripts/lasso gl kna10 mc2 {params.gls_dec} {params.gla_dec}"
 
 rule inferelator_bbsr:
     output:
@@ -68,7 +68,7 @@ rule inferelator_bbsr:
     params:
         bbsrs_dec = lambda wildcards: float(wildcards.bbsrs) / 100,
     shell:
-        "bin/fit-inferelator bbsr kna10 mc2 {params.bbsrs_dec}"
+        "scripts/fit-inferelator bbsr kna10 mc2 {params.bbsrs_dec}"
 
 rule inferelator_enet:
     output:
@@ -76,7 +76,7 @@ rule inferelator_enet:
     params:
         eneta_dec = lambda wildcards: float(wildcards.eneta) / 100,
     shell:
-        "bin/fit-inferelator enet kna10 mc2 {params.eneta_dec}"
+        "scripts/fit-inferelator enet kna10 mc2 {params.eneta_dec}"
 
 rule wgcna:
     input:

@@ -49,7 +49,7 @@ stability <- function(X, y, prior, strength=1, N=100, seed=1, bar=TRUE) {
     if (bar) setTxtProgressBar(pb, i)
   }
   if (bar) close(pb)
-  err <- 0.5*apply(Y1, 3, mean) + 0.5*(apply(Y2, 2:3, mean, na.rm=TRUE) %>% apply(2, mean, na.rm=TRUE))
+  err <- 0.5*apply(Y1, 3, mean) + 0.5*(apply(Y2, 2:3, mean, na.rm=TRUE) |> apply(2, mean, na.rm=TRUE))
   Pct <- apply(SS != 0, 2:3, mean)
   return(list(stb=Pct[,which.min(err)], beta=coef(fit, as.numeric(names(which.min(err))))[-1], m=m))
 }

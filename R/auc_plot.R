@@ -13,7 +13,7 @@
 #'            make_gs('data/knockout/irf6_KO.rds', 'lfsr < 0.01'))
 #' f <- list.files('network/gl/', pattern='fns-atac*', full.names=TRUE)
 #' DT <- combine_pr(f, gs)
-#' auc_table(DT) %>% auc_plot('Strength', 'TF')
+#' auc_table(DT) |> auc_plot('Strength', 'TF')
 #' @export
 
 auc_plot <- function(DT, group, facet, auc_metric, ncol = NULL) {

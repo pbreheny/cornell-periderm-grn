@@ -13,7 +13,7 @@ wilcox.test(m1 ~ Panel, dat)
 wilcox.test(m2 ~ Panel, dat)
 wilcox.test(m3 ~ Panel, dat)
 
-melt(dat[, .(Gene, Panel, m1, m2, m3)], measure.vars=c('m1', 'm2', 'm3')) %>%
+melt(dat[, .(Gene, Panel, m1, m2, m3)], measure.vars=c('m1', 'm2', 'm3')) |>
   ggplot(aes(Panel, value)) +
   geom_boxplot() +
   facet_grid(~variable) +

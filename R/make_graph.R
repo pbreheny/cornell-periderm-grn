@@ -20,9 +20,9 @@ make_graph <- function(grn, genes, remove_loners=TRUE) {
 
   # Setup
   if (is.character(grn)) {
-    stages <- (strsplit(grn, '/')[[1]][2] %>% strsplit('-'))[[1]][1]
-    net <- (strsplit(grn, '/')[[1]][2] %>% strsplit('-'))[[1]][2]
-    strength <- (strsplit(grn, '/')[[1]][2] %>% strsplit('-'))[[1]][3]%>%substr(start = 2, stop = 2)
+    stages <- (strsplit(grn, '/')[[1]][2] |> strsplit('-'))[[1]][1]
+    net <- (strsplit(grn, '/')[[1]][2] |> strsplit('-'))[[1]][2]
+    strength <- (strsplit(grn, '/')[[1]][2] |> strsplit('-'))[[1]][3]|>substr(start = 2, stop = 2)
     grn <- readRDS(grn)
   } else {
     stages <- net <- strength <- NULL
@@ -41,7 +41,7 @@ make_graph <- function(grn, genes, remove_loners=TRUE) {
   # Construct graph
   if (remove_loners) {
     n_edge <- apply(U, 1, sum)
-    interest <- n_edge[n_edge > 0] %>% names
+    interest <- n_edge[n_edge > 0] |> names
     S <- S[interest, interest]
     U <- U[interest, interest]
   }

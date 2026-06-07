@@ -16,7 +16,7 @@
 fit_genie_network <- function(Data, Prior, filename, strength=1) {
 
   # Fit
-  X <- dtx(Data$Exp) %>% GENIE3(regulators=Data$tf, nCores=4)
+  X <- dtx(Data$Exp) |> GENIE3(regulators=Data$tf, nCores=4)
 
   # Boost
   x <- t(X)

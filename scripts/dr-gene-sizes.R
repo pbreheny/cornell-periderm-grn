@@ -15,7 +15,7 @@ DT1 <- rbind(
   data.table(ENTREZID='794613', size=2659)) # From https://zfin.org/ZDB-GENE-030131-9854
 
 # Match to symbol
-DT2 <- select(org.Dr.eg.db, keys=keys(org.Dr.eg.db, keytype='ENTREZID'), columns=c('SYMBOL', 'GENENAME'), keytype='ENTREZID') %>% as.data.table
+DT2 <- select(org.Dr.eg.db, keys=keys(org.Dr.eg.db, keytype='ENTREZID'), columns=c('SYMBOL', 'GENENAME'), keytype='ENTREZID') |> as.data.table
 DT2 <- DT2[, first(.SD), ENTREZID]
 DT <- merge(DT1, DT2, by='ENTREZID')
 

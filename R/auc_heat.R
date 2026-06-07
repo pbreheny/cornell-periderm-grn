@@ -32,7 +32,7 @@
 #'             'network/gl/kna10-mc2-s200-a100.rds',
 #'             'network/gl/kna10-mc2-s300-a100.rds',
 #'             'network/gl/kna10-mc2-s400-a100.rds'),
-#'   collapse = FALSE) %>%
+#'   collapse = FALSE) |>
 #'   auc_table()
 #' auc_heat(DT[TF == 'grhl3'])
 #' @export

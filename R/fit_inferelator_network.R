@@ -30,9 +30,9 @@ fit_inferelator_network <- function(
 
   # Run python script
   if (type == 'bbsr') {
-    cmd <- glue('bin/fit-inferelator.py {prefix} bbsr {strength} {reps}')
+    cmd <- glue('scripts/fit-inferelator.py {prefix} bbsr {strength} {reps}')
   } else {
-    cmd <- glue('bin/fit-inferelator.py {prefix} enet {alpha} {reps}')
+    cmd <- glue('scripts/fit-inferelator.py {prefix} enet {alpha} {reps}')
   }
   err <- system(cmd, intern=TRUE, ignore.stderr=TRUE)
   if (!is.null(attr(err, 'status'))) stop("Error in running python code")

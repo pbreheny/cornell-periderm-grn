@@ -16,10 +16,10 @@
 #' tfap2a_chip10kb_gs <- make_gs('data/chip/tfap2a_chip_10kb.rds')
 #' grhl3_chip10kb_gs <- make_gs('data/chip/grhl3_chip_10kb.rds')
 #'
-#' pr_network('network/mir/fns-mall-s0.rds', grhl3_chip10kb_gs) %>% head
+#' pr_network('network/mir/fns-mall-s0.rds', grhl3_chip10kb_gs) |> head
 #'
 #' allChip_10kb_gs <- many_tf_gs(list(irf6_chip10kb_gs, grhl3_chip10kb_gs, tfap2a_chip10kb_gs))
-#' pr_network('network/mir/fns-atac-s1.rds', allChip_10kb_gs) %>% head
+#' pr_network('network/mir/fns-atac-s1.rds', allChip_10kb_gs) |> head
 #' @export
 
 pr_network <- function(rds, gs, rlim = 0.25, plot=FALSE) {
@@ -35,8 +35,8 @@ pr_network <- function(rds, gs, rlim = 0.25, plot=FALSE) {
   }
 
   cols <- c('target', tf)
-  DT <- as.data.table(network)[, ..cols] %>%
-    melt(id.vars = 'target') %>%
+  DT <- as.data.table(network)[, ..cols] |>
+    melt(id.vars = 'target') |>
     .[, value := abs(value)]
 
   # Merge GS and Network
@@ -44,7 +44,7 @@ pr_network <- function(rds, gs, rlim = 0.25, plot=FALSE) {
     #DT <- merge(DT, gs, by = 'target')
     DT <- merge(DT, gs, by.x = 'target', by.y = 'SYMBOL')
   } else {
-    DT <- DT[, id := paste(target, variable)] %>%
+    DT <- DT[, id := paste(target, variable)] |>
       merge(gs, by = 'id')
     #DT[,target.y := NULL]
     #setnames(DT, 'target.x', 'target')
@@ -75,9 +75,9 @@ pr_network <- function(rds, gs, rlim = 0.25, plot=FALSE) {
   if (length(tf) == 1) {
     out[, TF := tf]
   } else {
-    TF <- tf %>%
-      subset(!is.na(.)) %>%
-      unique() %>%
+    TF <- tf |>
+      subset(!is.na(.)) |>
+      unique() |>
       paste(collapse = ',')
     out[, TF := TF]
   }

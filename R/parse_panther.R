@@ -9,8 +9,8 @@
 #' @export
 
 parse_panther <- function(json_file) {
-  jsonlite::fromJSON(json_file)[[1]]$group$result %>%
-    lapply(fix_panther_single) %>%
+  jsonlite::fromJSON(json_file)[[1]]$group$result |>
+    lapply(fix_panther_single) |>
     rbindlist()
 }
 

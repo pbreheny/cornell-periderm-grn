@@ -22,7 +22,7 @@ knitr::opts_chunk$set(comment = "#", echo = FALSE, message = FALSE,
 # Main network
 net <- readRDS('network/wgcna/kna10-cor-s100.rds')
 g_full <- make_graph(net)
-m <- cluster_walktrap(g_full) %>% membership
+m <- cluster_walktrap(g_full) |> membership
 
 # Subset network
 evl_expr <- import_enr()
@@ -44,9 +44,9 @@ gp <- import_gp()
 gp[, .(Evidence=factor(evidence, levels=c('Green', 'Amber', 'Red', 'NA')),
        evl=fcase(gene %in% colnames(net), 'TF',
                  gene %in% rownames(net), 'Non-TF',
-                 default = 'Not expressed') %>%
-         factor(levels=c('Not expressed', 'Non-TF', 'TF')))] %>%
-  tbl_cross(percent='row') %>%
+                 default = 'Not expressed') |>
+         factor(levels=c('Not expressed', 'Non-TF', 'TF')))] |>
+  tbl_cross(percent='row') |>
   modify_spanning_header(all_stat_cols() ~ "**EVL expression**")
 
 #' # Analysis of transcription factors
@@ -54,8 +54,8 @@ gp[, .(Evidence=factor(evidence, levels=c('Green', 'Amber', 'Red', 'NA')),
 # Setup
 g <- make_graph(net)
 x <- apply(soft(net, 0.1), 2, sum)
-tf <- hub_genes(g) %>%
-  merge(data.table(Gene=names(m), Cluster=m)) %>%
+tf <- hub_genes(g) |>
+  merge(data.table(Gene=names(m), Cluster=m)) |>
   merge(data.table(Gene=names(x), EdgeSum=x))
 
 #' ## Test cluster
@@ -63,10 +63,10 @@ tf <- hub_genes(g) %>%
 # g   List of genes (character vector)
 # cl  Cluster assignment
 test_cluster <- function(g, dt, label) {
-  dt[, .(Panel = factor(Gene %in% g, labels=c('No', 'Yes')), Cluster=factor(Cluster))] %>%
-    tbl_summary(by=Panel, percent='row') %>%
-    add_p() %>%
-    modify_header(label = '') %>%
+  dt[, .(Panel = factor(Gene %in% g, labels=c('No', 'Yes')), Cluster=factor(Cluster))] |>
+    tbl_summary(by=Panel, percent='row') |>
+    add_p() |>
+    modify_header(label = '') |>
     modify_spanning_header(all_stat_cols() ~ paste0('**', label, '**'))
 }
 
@@ -83,10 +83,10 @@ test_cluster(gp[prevgen==1]$gene, tf, '"prevgen"')
 # g   List of genes (character vector)
 # cl  Cluster assignment
 test_central <- function(g, dt, label) {
-  dt[, .(Panel = factor(Gene %in% g, labels=c('No', 'Yes')), Centrality, EdgeSum)] %>%
-    tbl_summary(by=Panel) %>%
-    add_p() %>%
-    modify_header(label = '') %>%
+  dt[, .(Panel = factor(Gene %in% g, labels=c('No', 'Yes')), Centrality, EdgeSum)] |>
+    tbl_summary(by=Panel) |>
+    add_p() |>
+    modify_header(label = '') |>
     modify_spanning_header(all_stat_cols() ~ paste0('**', label, '**'))
 }
 
@@ -125,11 +125,11 @@ test_cluster(gp[evidence=='Green' | evidence == 'Amber']$gene, target, 'Evidence
 #' ## Test centrality
 
 test_edgesum <- function(g, dt, label) {
-  dt[, .(Panel = factor(Gene %in% g, labels=c('No', 'Yes')), EdgeSum)] %>%
-    tbl_summary(by=Panel) %>%
-    add_p() %>%
-    modify_header(label = '') %>%
-    modify_spanning_header(all_stat_cols() ~ paste0('**', label, '**')) %>%
+  dt[, .(Panel = factor(Gene %in% g, labels=c('No', 'Yes')), EdgeSum)] |>
+    tbl_summary(by=Panel) |>
+    add_p() |>
+    modify_header(label = '') |>
+    modify_spanning_header(all_stat_cols() ~ paste0('**', label, '**')) |>
     modify_footnote(update = everything() ~ NA)
 }
 

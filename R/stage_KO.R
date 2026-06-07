@@ -41,7 +41,7 @@ stage_KO <- function(DESeq2_result, TF, target_genes, restrict_targets = TRUE){
         org.Dr.eg.db::org.Dr.eg.db,
         keys = as.character(rownames(KO_ash)),
         columns = c('SYMBOL', 'ENSEMBL'),
-        keytype = 'ENSEMBL')) %>%
+        keytype = 'ENSEMBL')) |>
         data.table()
 
       # take only the first instance of an ENSEMBL ID

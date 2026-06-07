@@ -12,7 +12,7 @@
 #' f <- c(list.files('network/wgcna/', pattern = "kna10-mc2-cor*", full.names = TRUE),
 #'        list.files('network/genie/', pattern = "kna10-gne-*", full.names = TRUE))
 #' DT <- combine_pr(f, gs, collapse = FALSE)
-#' auc_table(DT) %>% master_hm('pAUC_Gain')
+#' auc_table(DT) |> master_hm('pAUC_Gain')
 #' @export
 
 master_hm <- function(DT, metric, grid = FALSE){

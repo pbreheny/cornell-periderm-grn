@@ -33,7 +33,7 @@ fit_stability_network <- function(Data, Prior, filename, subset, N=100, strength
   Beta <- matrix(NA, ncol(Y), ncol(A), dimnames=list(colnames(Y), colnames(A)))
   for (j in tt) {
     stopifnot(identical(names(Prior)[-1], colnames(A)))
-    prior <- Prior[Gene==colnames(Y)[j], -1] %>% as.numeric
+    prior <- Prior[Gene==colnames(Y)[j], -1] |> as.numeric
     if (colnames(Y)[j] %in% colnames(A)) prior[which(colnames(A) == colnames(Y)[j])] <- -Inf
     if (sd(Y[,j]) < 1e-10) {
       Stability[j,] <- 0

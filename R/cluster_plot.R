@@ -7,9 +7,9 @@
 #' @param boring      Use boring colors? (default: `FALSE`)
 #'
 #' @examples
-#' readRDS('network/wgcna/kna10-cor-s100.rds') %>% cluster_plot()
+#' readRDS('network/wgcna/kna10-cor-s100.rds') |> cluster_plot()
 #' \dontrun{
-#' readRDS('network/wgcna/kna10-cor-s100.rds') %>% cluster_plot(boring=TRUE) + hrbrthemes::theme_ft_rc()
+#' readRDS('network/wgcna/kna10-cor-s100.rds') |> cluster_plot(boring=TRUE) + hrbrthemes::theme_ft_rc()
 #' }
 #' @export
 

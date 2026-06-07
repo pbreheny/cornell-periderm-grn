@@ -16,7 +16,7 @@ plot_mcc <- function(rds, gs, tf) {
   network <- readRDS(rds)
   DT <- data.table(
     SYMBOL = rownames(network),
-    Edge = network[, tf]) %>% 
+    Edge = network[, tf]) |> 
     merge(gs, by='SYMBOL')
 
   # Plot

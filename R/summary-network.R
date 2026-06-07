@@ -7,7 +7,7 @@
 #' @method summary network
 #'
 #' @examples
-#' readRDS('network/wgcna/kna10-mc2-cor-s100.rds') %>% summary()
+#' readRDS('network/wgcna/kna10-mc2-cor-s100.rds') |> summary()
 #' @export
 
 summary.network <- function(object, resolution=NULL, tf_only=TRUE, ...) {
@@ -17,7 +17,7 @@ summary.network <- function(object, resolution=NULL, tf_only=TRUE, ...) {
   set.seed(1)
 
   # Edge sum
-  e <- abs(object) %>% rowSums()
+  e <- abs(object) |> rowSums()
   edge <- data.table(Gene=names(e), Edgesum=e, key='Gene')
 
   # Cluster
@@ -27,9 +27,9 @@ summary.network <- function(object, resolution=NULL, tf_only=TRUE, ...) {
     g <- make_graph(object, rownames(object))
   }
   if (is.null(resolution)) {
-    m <- cluster_walktrap(g) %>% membership
+    m <- cluster_walktrap(g) |> membership
   } else {
-    m <- cluster_louvain(g, resolution=resolution) %>% membership
+    m <- cluster_louvain(g, resolution=resolution) |> membership
   }
   cluster <- data.table(
     Gene=names(m),
@@ -51,11 +51,11 @@ summary.network <- function(object, resolution=NULL, tf_only=TRUE, ...) {
   gp[, Panel := factor(Gene %in% panel$Gene)]
 
   # Return
-  hub_genes(g) %>%
-    .[, .(Gene, Centrality)] %>%
-    merge(edge) %>%
-    merge(cluster) %>%
-    merge(pct) %>%
-    merge(enr) %>%
+  hub_genes(g) |>
+    .[, .(Gene, Centrality)] |>
+    merge(edge) |>
+    merge(cluster) |>
+    merge(pct) |>
+    merge(enr) |>
     merge(gp)
 }

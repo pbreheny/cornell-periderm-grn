@@ -12,7 +12,7 @@ setnames(Tissue, 'V1', 'Sample')
 setkey(Tissue, 'Sample')
 
 # Merge with time
-Time <- readxl::read_excel('data/Time_series_data4GeneExpression.xlsx') %>% as.data.table
+Time <- readxl::read_excel('data/Time_series_data4GeneExpression.xlsx') |> as.data.table
 setnames(Time, 'Sample Name', 'Sample')
 setnames(Time, 'TimePoint', 'Time')
 Tissue <- merge(Tissue, Time, by='Sample')

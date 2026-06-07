@@ -17,7 +17,7 @@
 #' @export
 
 combine_pr_manyTF <- function(files, gs, rlim=0.25) {
-  out <- lapply(seq_along(files), function(i) pr_network(files[i], gs, rlim, plot=FALSE)[-1]) %>%
+  out <- lapply(seq_along(files), function(i) pr_network(files[i], gs, rlim, plot=FALSE)[-1]) |>
     rbindlist(fill = TRUE)
   out <- out[is.finite(Precision) & Recall != 0]
   attr(out, 'random') <- mean(gs$truth)

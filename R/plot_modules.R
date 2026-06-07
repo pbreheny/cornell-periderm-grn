@@ -13,8 +13,8 @@
 #' @param layout        a ggraph layout
 #'
 #' @examples
-#' make_graph('network/wgcna/kna10-cor-s100.rds') %>% plot_modules(nodeType = "color")
-#' make_graph('network/wgcna/kna10-cor-s100.rds') %>% plot_modules(nodeType = "shape")
+#' make_graph('network/wgcna/kna10-cor-s100.rds') |> plot_modules(nodeType = "color")
+#' make_graph('network/wgcna/kna10-cor-s100.rds') |> plot_modules(nodeType = "shape")
 #' @export
 
 plot_modules <- function(
@@ -42,7 +42,7 @@ plot_modules <- function(
     clust <- cluster_louvain(g, resolution=resolution)
   }
 
-  res <- lapply(1:length(clust), function(x) data.table(gname = clust[[x]], cluster = x)) %>% rbindlist()
+  res <- lapply(1:length(clust), function(x) data.table(gname = clust[[x]], cluster = x)) |> rbindlist()
   if (!missing(genes)) {
     ind <- which(names(V(g)) %in% genes)
     res <- res[gname %in% genes]
@@ -60,9 +60,9 @@ plot_modules <- function(
   clrs <- MetBrewer::met.brewer("Tsimshian", length(unique(clust$membership)), 'discrete')
   shapes <- c(15, 17, 19, 18, 7, 8, 9, 10, 11, 12, 13, 14)
 
-  label <- get.vertex.attribute(g) %>%
-    as.data.table %>%
-    .[order(module, -size)] %>%
+  label <- get.vertex.attribute(g) |>
+    as.data.table |>
+    .[order(module, -size)] |>
     .[, head(.SD, n_lab), by = module]
 
   v_lab <- ifelse(V(g)$name %in% label$name, V(g)$name, "")

@@ -15,19 +15,19 @@ combine_gs <- function(gs1, gs2){
   gs <- merge(gs1, gs2, by = c('SYMBOL'))
   gs[, truth := ifelse((gs$truth.x & gs$truth.y == 1), 1, 0)]
 
-  Flank <- c(gs[['Flank.x']][1], gs[['Flank.y']][1]) %>%
-    subset(!is.na(.)) %>%
-    unique() %>%
+  Flank <- c(gs[['Flank.x']][1], gs[['Flank.y']][1]) |>
+    subset(!is.na(.)) |>
+    unique() |>
     paste(collapse = ',')
 
-  Threshold <- c(gs[['Threshold.x']][1], gs[['Threshold.y']][1]) %>%
-    subset(!is.na(.)) %>%
-    unique() %>%
+  Threshold <- c(gs[['Threshold.x']][1], gs[['Threshold.y']][1]) |>
+    subset(!is.na(.)) |>
+    unique() |>
     paste(collapse = ',')
 
-  TF <- c(gs[['TF.x']][1], gs[['TF.y']][1]) %>%
-    subset(!is.na(.)) %>%
-    unique() %>%
+  TF <- c(gs[['TF.x']][1], gs[['TF.y']][1]) |>
+    subset(!is.na(.)) |>
+    unique() |>
     paste(collapse = ',')
 
   gs[, Flank := Flank]

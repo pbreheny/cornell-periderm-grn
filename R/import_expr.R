@@ -30,7 +30,7 @@ import_expr <- function(source=c('kenny', 'farrell', 'kennyOld'), preprocess=c('
   preprocess <- match.arg(preprocess)
   subset <- match.arg(subset)
 
-  tf <- fread('data/raw/zf_All_TF_names_Curated.txt')[[1]] %>% str_to_lower %>% sort
+  tf <- fread('data/raw/zf_All_TF_names_Curated.txt')[[1]] |> str_to_lower |> sort
   if (source == 'farrell') {
     # Tissue
     DT1 <- fread('data/raw/EarlyEVL.txt', header=FALSE)
@@ -46,7 +46,7 @@ import_expr <- function(source=c('kenny', 'farrell', 'kennyOld'), preprocess=c('
     setkey(Tissue, 'Sample')
 
     # Merge with time
-    Time <- readxl::read_excel('data/raw/Time_series_data4GeneExpression.xlsx') %>% as.data.table
+    Time <- readxl::read_excel('data/raw/Time_series_data4GeneExpression.xlsx') |> as.data.table
     setnames(Time, 'Sample Name', 'Sample')
     setnames(Time, 'TimePoint', 'Time')
     Tissue <- merge(Tissue, Time, by='Sample')
@@ -67,8 +67,8 @@ import_expr <- function(source=c('kenny', 'farrell', 'kennyOld'), preprocess=c('
     Tissue <- NULL
     #Exp <- fread('data/raw/TPM_aggrCK1CK2_ShieldRNA.txt')
     Exp <- readxl::read_excel('data/raw/InputDataAll_12July23_Sunil.xlsx',
-                              sheet='TPM_GeneExpression', .name_repair = 'minimal') %>% as.data.table()
-    samples <- names(Exp)[-1] %>% str_replace('\\..*', '') %>% str_to_lower
+                              sheet='TPM_GeneExpression', .name_repair = 'minimal') |> as.data.table()
+    samples <- names(Exp)[-1] |> str_replace('\\..*', '') |> str_to_lower
     names(Exp) <- c('Gene', samples)
     Exp[, Gene := str_to_lower(Gene)]
     Exp[, (samples) := lapply(.SD, log1p2), .SDcols=samples]
@@ -76,7 +76,7 @@ import_expr <- function(source=c('kenny', 'farrell', 'kennyOld'), preprocess=c('
   } else if (source == 'kennyOld') {
     Tissue <- NULL
     Exp <- fread('data/raw/TPM_aggrCK1CK2_ShieldRNA.txt')
-    samples <- names(Exp)[-1] %>% str_replace('\\..*', '') %>% str_to_lower
+    samples <- names(Exp)[-1] |> str_replace('\\..*', '') |> str_to_lower
     names(Exp) <- c('Gene', samples)
     Exp[, Gene := str_to_lower(Gene)]
     Exp[, (samples) := lapply(.SD, log1p2), .SDcols=samples]

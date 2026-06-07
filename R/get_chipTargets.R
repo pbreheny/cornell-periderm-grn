@@ -35,7 +35,7 @@ get_chipTargets <- function(target_genes, flank_size = 0){
   }
 
   # export bedfiles
-  target_bed[order(target_bed$chr, target_bed$start), ] %>%
+  target_bed[order(target_bed$chr, target_bed$start), ] |>
     write.table(file = "data/raw/target_genes.bed",
               quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
   if (flank_size > 0) {

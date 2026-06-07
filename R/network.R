@@ -36,8 +36,8 @@ network <- function(x) {
     warning('network() is intended to be called inside of fit_xxx_network()')
     method <- '???'
   } else {
-    call <- sys.calls()[[sys.nframe()-1]] %>% as.list()
-    fmls <- call[[1]] %>% deparse() %>% formals()
+    call <- sys.calls()[[sys.nframe()-1]] |> as.list()
+    fmls <- call[[1]] |> deparse() |> formals()
     for (item in setdiff(names(fmls), c('Data', 'Prior', 'filename'))) {
       if (item %in% names(call)) {
         args[[item]] <- eval(call[[item]])
@@ -47,8 +47,8 @@ network <- function(x) {
         args[[item]] <- fmls[[item]]
       }
     }
-    method <- deparse(call[[1]]) %>%
-      str_extract('_(.*)', 1) %>%
+    method <- deparse(call[[1]]) |>
+      str_extract('_(.*)', 1) |>
       str_replace('_network', '')
   }
   meta <- append(list(
@@ -65,11 +65,11 @@ network <- function(x) {
 
 #' @export
 print.network <- function(x, ...) {
-  glue('Matrix of dimension {nrow(x)} x {ncol(x)} (targets x transcription factors)\n\n') %>% cat()
+  glue('Matrix of dimension {nrow(x)} x {ncol(x)} (targets x transcription factors)\n\n') |> cat()
   meta <- attr(x, 'meta')
   for (item in setdiff(names(meta), c('samples'))) {
     if (is.symbol(meta[[item]])) next
-    sprintf('%-11s: %s\n', item, meta[[item]]) %>% cat()
+    sprintf('%-11s: %s\n', item, meta[[item]]) |> cat()
   }
 }
 
@@ -86,7 +86,7 @@ print.network <- function(x, ...) {
 #' @export
 `as.data.table.network` <- function(x, long=FALSE) {
   if (long) {
-    as.data.table(unclass(x), keep.rownames='target') %>%
+    as.data.table(unclass(x), keep.rownames='target') |>
       melt(id.vars='target',
            variable.name = "tf",
            value.name = "confidence")

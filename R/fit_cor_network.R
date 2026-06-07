@@ -24,7 +24,7 @@ fit_cor_network <- function(
   type <- match.arg(type)
 
   # Fit
-  cr <- dtx(Data$Exp, transpose = TRUE) %>% cor()
+  cr <- dtx(Data$Exp, transpose = TRUE) |> cor()
   diag(cr) <- 0
 
   # TOM

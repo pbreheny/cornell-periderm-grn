@@ -8,12 +8,12 @@
 #' plot_gene(Data, 'irf6')
 #' plot_gene(Data, 'irf6', 'gata3')
 #' Data <- import_expr('farrell')
-#' subset(Data, Tissue == 'EVL') %>% plot_gene('irf6', 'gata3')
+#' subset(Data, Tissue == 'EVL') |> plot_gene('irf6', 'gata3')
 #' @export
 
 plot_gene <- function(Data, x, y) {
   if (missing(y)) {
-    xx <- Data$Exp[Gene == x][,-1] %>% unlist
+    xx <- Data$Exp[Gene == x][,-1] |> unlist
     DT <- data.table(xx=xx, Sample=names(xx))
     setnames(DT, 'xx', x)
     if (!is.null(Data$Tissue)) {
@@ -28,8 +28,8 @@ plot_gene <- function(Data, x, y) {
         theme(axis.title.x = element_blank(), axis.text.x = element_blank(), axis.ticks.x = element_blank())
     }
   } else {
-    xx <- Data$Exp[Gene == x][,-1] %>% unlist
-    yy <- Data$Exp[Gene == y][,-1] %>% unlist
+    xx <- Data$Exp[Gene == x][,-1] |> unlist
+    yy <- Data$Exp[Gene == y][,-1] |> unlist
     DT <- data.table(xx=xx, yy=yy, Sample=names(xx))
     setnames(DT, 'xx', x)
     setnames(DT, 'yy', y)

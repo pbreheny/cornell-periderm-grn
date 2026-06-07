@@ -11,10 +11,10 @@
 #' gs <- list(make_gs('data/knockout/grhl3_KO.rds', 'lfsr  < 0.01'),
 #'            make_gs('data/knockout/irf6_KO.rds', 'lfsr  < 0.01'))
 #' combine_pr(c('network/mir/fns-mall-s0.rds', 'network/mir/fns-mall-s1.rds',
-#'              'network/mir/fns-mall-s2.rds'), gs[[1]]) %>% pr_plot('Strength')
+#'              'network/mir/fns-mall-s2.rds'), gs[[1]]) |> pr_plot('Strength')
 #' combine_pr(c('network/gl/fns-mall-s0.rds', 'network/gl/fns-mall-s1.rds',
-#'              'network/gl/fns-mall-s2.rds'), gs[[1]]) %>% pr_plot('Strength')
-#' combine_pr(c('network/mir/fns-mall-s0.rds', 'network/mir/fns-mall-s1.rds'), gs) %>%
+#'              'network/gl/fns-mall-s2.rds'), gs[[1]]) |> pr_plot('Strength')
+#' combine_pr(c('network/mir/fns-mall-s0.rds', 'network/mir/fns-mall-s1.rds'), gs) |>
 #'   pr_plot('Strength', 'TF')
 #' @export
 

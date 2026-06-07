@@ -26,7 +26,7 @@ fit_glasso_network <- function(Data, Prior, filename, strength=2, alpha=1, thin)
   Res <- matrix(0, ncol(Y), ncol(A), dimnames=list(colnames(Y), colnames(A)))
   for (j in tt) {
     stopifnot(identical(names(Prior)[-1], colnames(A)))
-    prior <- Prior[Gene==colnames(Y)[j], -1] |> as.numeric
+    prior <- Prior[Gene==colnames(Y)[j], -1] |> as.numeric()
     if (sd(Y[,j]) < 1e-10) {
       Res[j,] <- 0
     } else {

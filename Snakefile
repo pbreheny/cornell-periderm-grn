@@ -15,7 +15,9 @@ gl_grid = list(product(strength, alpha))
 rule all:
     input:
         "figs/fig3.pdf",
-        "figs/fig5.pdf",
+        "figs/fig5a.pdf",
+        "figs/fig5b.pdf",
+        "figs/fig5c.csv",
         "figs/fig6.pdf"
 
 rule fig3:
@@ -46,7 +48,7 @@ rule fig5:
     output:
         "figs/fig5a.pdf",
         "figs/fig5b.pdf",
-        "figs/fig5c.txt"
+        "figs/fig5c.csv"
     script: "scripts/fig5.R"
 
 rule fig6:

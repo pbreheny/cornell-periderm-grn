@@ -12,7 +12,7 @@
 dtx <- function(DT, rowid, colid, transpose=FALSE) {
   if (missing(rowid)) rowid <- DT[[1]]
   if (missing(colid)) colid <- names(DT)[-1]
-  X <- DT[rowid][, ..colid] |> as.matrix
+  X <- DT[rowid][, ..colid] |> as.matrix()
   rownames(X) <- rowid
   colnames(X) <- colid
   if (transpose) X <- t(X)

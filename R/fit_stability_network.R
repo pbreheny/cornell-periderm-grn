@@ -13,41 +13,71 @@
 #'
 #' @examples
 #' Data <- import_expr()
-#' Prior <- import_prior('atac', Data)
-#' Res <- fit_stability_network(Data, Prior, N=10, thin=10)
+#' Prior <- import_prior("atac", Data)
+#' Res <- fit_stability_network(Data, Prior, N = 10, thin = 10)
 #' @export
 
-fit_stability_network <- function(Data, Prior, filename, subset, N=100, strength=2, weight=0, thin) {
+fit_stability_network <- function(
+  Data,
+  Prior,
+  filename,
+  subset,
+  N = 100,
+  strength = 2,
+  weight = 0,
+  thin
+) {
   A <- estimate_activity(Data, Prior, weight)
-  Y <- dtx(Data$Exp, transpose=TRUE)
+  Y <- dtx(Data$Exp, transpose = TRUE)
   if (!missing(subset)) {
     A <- A[subset, ]
     Y <- Y[subset, ]
   }
-  pb <- txtProgressBar(0, ncol(Y), style=3)
+  pb <- txtProgressBar(0, ncol(Y), style = 3)
   tt <- 1:ncol(Y)
-  if (!missing(thin)) tt <- sample(tt, thin)
+  if (!missing(thin)) {
+    tt <- sample(tt, thin)
+  }
 
   # Fit network
-  Stability <- matrix(NA, ncol(Y), ncol(A), dimnames=list(colnames(Y), colnames(A)))
-  Beta <- matrix(NA, ncol(Y), ncol(A), dimnames=list(colnames(Y), colnames(A)))
+  Stability <- matrix(
+    NA,
+    ncol(Y),
+    ncol(A),
+    dimnames = list(colnames(Y), colnames(A))
+  )
+  Beta <- matrix(
+    NA,
+    ncol(Y),
+    ncol(A),
+    dimnames = list(colnames(Y), colnames(A))
+  )
   for (j in tt) {
     stopifnot(identical(names(Prior)[-1], colnames(A)))
-    prior <- Prior[Gene==colnames(Y)[j], -1] |> as.numeric
-    if (colnames(Y)[j] %in% colnames(A)) prior[which(colnames(A) == colnames(Y)[j])] <- -Inf
-    if (sd(Y[,j]) < 1e-10) {
-      Stability[j,] <- 0
-      Beta[j,] <- 0
+    prior <- Prior[Gene == colnames(Y)[j], -1] |> as.numeric()
+    if (colnames(Y)[j] %in% colnames(A)) {
+      prior[which(colnames(A) == colnames(Y)[j])] <- -Inf
+    }
+    if (sd(Y[, j]) < 1e-10) {
+      Stability[j, ] <- 0
+      Beta[j, ] <- 0
     } else {
-      fit <- stability(A, Y[,j], prior, strength=strength, N=N, bar=FALSE)
-      Stability[j,] <- fit$stb
-      Beta[j,] <- fit$beta
+      fit <- stability(
+        A,
+        Y[, j],
+        prior,
+        strength = strength,
+        N = N,
+        bar = FALSE
+      )
+      Stability[j, ] <- fit$stb
+      Beta[j, ] <- fit$beta
     }
     setTxtProgressBar(pb, j)
   }
   close(pb)
 
-  x <- 0.5*Stability + 0.5*abs(Beta)
+  x <- 0.5 * Stability + 0.5 * abs(Beta)
   x[x < 0] <- 0
 
   # Return / save

@@ -5,12 +5,15 @@ From: bioconductor/r-ver:3.23
     Rscript -e 'install.packages(c(
         "ashr",
         "data.table",
+        "forcats",
         "glmnet",
         "glue",
         "ggplot2",
         "ggraph",
         "igraph",
         "ncvreg",
+        "readxl",
+        "shadowtext",
         "stringr",
         "BiocManager",
         "MetBrewer"

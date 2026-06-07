@@ -54,7 +54,7 @@ import_prior <- function(id = c('mc2', 'atac', 'h3k', 'cmb', 'exp', 'ovr', 'scat
     Prior <- data.table(Gene=target, as.data.table(as.list(f(p))))
     setkey(Prior, 'Gene')
   } else if (id == 'ovr') {
-    cluster_data <- readxl::read_excel('data/raw/Cluster_Home_Genes_multiome.xls', 'Cluster31') |> as.data.table
+    cluster_data <- readxl::read_excel('data/raw/Cluster_Home_Genes_multiome.xls', 'Cluster31') |> as.data.table()
     ovr <- rep(0, length(Data$tf))
     names(ovr) <- Data$tf
     ovr[Data$tf %in% cluster_data$gene] <- 1
@@ -99,7 +99,7 @@ import_prior <- function(id = c('mc2', 'atac', 'h3k', 'cmb', 'exp', 'ovr', 'scat
         Prior[, (missing_tf) := 0]
       }
   }
-  tf <- intersect(names(Prior)[-1], Data$tf) |> sort
+  tf <- intersect(names(Prior)[-1], Data$tf) |> sort()
   Prior <- cbind(Prior[, 1], Prior[, ..tf])
 
   # Return

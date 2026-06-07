@@ -27,7 +27,7 @@ Data <- import_expr(source, preprocess, subset, filter)
 Prior <- import_prior(opt$prior, Data)
 
 # Fit networks
-if (!dir.exists("network/gl")) dir.create("network/gl", recursive = TRUE)
+dir.create("network/gl", recursive = TRUE, showWarnings = FALSE)
 s_id <- sprintf('%0.3d', as.integer(100 * as.numeric(opt$strength)))
 a_id <- sprintf('%0.3d', as.integer(100 * as.numeric(opt$alpha)))
 if (opt$method == 'gl') {

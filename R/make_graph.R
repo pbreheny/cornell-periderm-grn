@@ -41,7 +41,7 @@ make_graph <- function(grn, genes, remove_loners=TRUE) {
   # Construct graph
   if (remove_loners) {
     n_edge <- apply(U, 1, sum)
-    interest <- n_edge[n_edge > 0] |> names
+    interest <- n_edge[n_edge > 0] |> names()
     S <- S[interest, interest]
     U <- U[interest, interest]
   }

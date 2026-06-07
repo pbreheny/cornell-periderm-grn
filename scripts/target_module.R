@@ -1,4 +1,4 @@
-net <- readRDS('data/network/wgcna/kna10-cor-s100.rds')
+net <- readRDS('network/wgcna/kna10-cor-s100.rds')
 s1 <- summary(net)
 s2 <- summary(net, tf_only=FALSE)
 top_25 <- s1[, .SD[order(-Centrality)][1:25], Cluster]

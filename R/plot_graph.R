@@ -7,7 +7,7 @@
 #' @param max_node      maximum node size
 #'
 #' @examples
-#' make_graph('data/network/genie/kna10-gne-s100.rds') %>% plot_graph()
+#' make_graph('network/genie/kna10-gne-s100.rds') %>% plot_graph()
 #' @export
 
 plot_graph <- function(g, n=10, percentile = 0.7, max_width = 0.1, max_node = 6) {

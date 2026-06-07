@@ -17,8 +17,8 @@ from inferelator import inferelator_workflow, inferelator_verbose_level, MPContr
 inferelator_verbose_level(1)
 
 # Set the location of the input data and the desired location of the output files
-DATA_DIR = 'data/network/inferelator'
-OUTPUT_DIR = 'data/network/inferelator/'
+DATA_DIR = 'network/inferelator'
+OUTPUT_DIR = 'network/inferelator/'
 EXPRESSION_FILE_NAME = arg['<prefix>'] + '-exprs.tsv'
 PRIORS_FILE_NAME = arg['<prefix>'] + '-prior.tsv'
 TF_LIST_FILE_NAME = arg['<prefix>'] + '-tf.txt'

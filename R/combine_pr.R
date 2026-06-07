@@ -12,12 +12,12 @@
 #'
 #' @examples
 #' grhl3_gs <- make_gs('data/knockout/grhl3_KO.rds', 'lfsr  < 0.01')
-#' combine_pr('data/network/gl/fns-mall-s0.rds', grhl3_gs)
-#' combine_pr(c('data/network/gl/fns-mall-s0.rds', 'data/network/gl/fns-mall-s2.rds'), grhl3_gs)
+#' combine_pr('network/gl/fns-mall-s0.rds', grhl3_gs)
+#' combine_pr(c('network/gl/fns-mall-s0.rds', 'network/gl/fns-mall-s2.rds'), grhl3_gs)
 #'
 #' gs <- list(grhl3_gs, make_gs('data/knockout/irf6_KO.rds', 'lfsr  < 0.01'))
-#' combine_pr('data/network/gl/fns-mall-s0.rds', gs)
-#' combine_pr(c('data/network/gl/fns-mall-s0.rds', 'data/network/gl/fns-mall-s2.rds'), gs)
+#' combine_pr('network/gl/fns-mall-s0.rds', gs)
+#' combine_pr(c('network/gl/fns-mall-s0.rds', 'network/gl/fns-mall-s2.rds'), gs)
 #' @export
 
 combine_pr <- function(files, gs, rlim=0.25, collapse=FALSE) {

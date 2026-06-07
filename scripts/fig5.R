@@ -1,24 +1,28 @@
 #' Create Figure 5 for paper: Illustrate modules / clustering for top network
-net <- readRDS("data/network/wgcna/kna10-mc2-cor-s100.rds") |> transform()
+devtools::load_all(quiet = TRUE)
+dir.create("figs", showWarnings = FALSE)
+
+# Load network
+net <- readRDS("network/wgcna/kna10-mc2-cor-s100.rds") |> transform()
+
+# Sizes
 make_graph(net) |>
   cluster_walktrap() |>
   sizes()
 
 # a
-pdf("scripts/out/fig5a.pdf", 5, 5)
+pdf("figs/fig5a.pdf", 5, 5)
 cluster_plot(net)
 dev.off()
 
-# b (run scripts/panther-export.r first)
+# b
+# See scripts/panther-export.r to reproduce json files
 da <- parse_panther("data/go/cluster-a.json")
 db <- parse_panther("data/go/cluster-b.json")
-# dc <- parse_panther('data/go/cluster-c.json')
 da$Cluster <- "1"
 db$Cluster <- "2"
-# dc$Cluster <- '3'
-# go <- rbind(da, db, dc)
 go <- rbind(da, db)
-pdf("scripts/out/fig5b.pdf", 7, 4)
+pdf("figs/fig5b.pdf", 7, 4)
 go[term.level == 0] |>
   _[plus_minus == "+"] |>
   _[str_detect(term.label, "RNA", negate = TRUE)] |>
@@ -36,5 +40,5 @@ op <- options(digits = 2)
 summary(net) |>
   _[order(-Centrality), head(.SD, 5), Cluster] |>
   _[order(Cluster, -Edgesum), .(Cluster, Gene, Centrality, Edgesum)] |>
-  fwrite("scripts/out/fig5c.txt")
+  fwrite("figs/fig5c.csv")
 options(op)

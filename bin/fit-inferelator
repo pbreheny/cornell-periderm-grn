@@ -25,12 +25,12 @@ Data <- import_expr(source, preprocess, subset, filter)
 Prior <- import_prior(opt$prior, Data)
 
 # Fit network
-if (!dir.exists("data/network/inferelator")) dir.create("data/network/inferelator", recursive = TRUE)
+if (!dir.exists("network/inferelator")) dir.create("network/inferelator", recursive = TRUE)
 id <- sprintf('%0.3d', as.integer(100 * as.numeric(opt$x)))
 if (opt$type == 'bbsr') {
-  fn <- glue::glue("data/network/inferelator/{opt$data}-{opt$prior}-{opt$type}-s{id}.rds")
+  fn <- glue::glue("network/inferelator/{opt$data}-{opt$prior}-{opt$type}-s{id}.rds")
   fit_inferelator_network(Data, Prior, fn, type = "bbsr", strength = opt$x) 
 } else {
-  fn <- glue::glue("data/network/inferelator/{opt$data}-{opt$prior}-{opt$type}-a{id}.rds")
+  fn <- glue::glue("network/inferelator/{opt$data}-{opt$prior}-{opt$type}-a{id}.rds")
   fit_inferelator_network(Data, Prior, fn, type = 'enet', alpha = opt$x) 
 }

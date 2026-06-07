@@ -13,7 +13,7 @@
 #' grhl3_chip10kb_gs <- make_gs('data/chip/grhl3_chip_10kb.rds')
 #'
 #' allChip_100kb_gs <- suppressWarnings(many_tf_gs(list(irf6_chip10kb_gs, grhl3_chip10kb_gs, tfap2a_chip10kb_gs)))
-#' combine_pr_manyTF(c('data/network/gl/fns-atac-s1.rds', 'data/network/gl/fns-atac-s4.rds'), allChip_100kb_gs)
+#' combine_pr_manyTF(c('network/gl/fns-atac-s1.rds', 'network/gl/fns-atac-s4.rds'), allChip_100kb_gs)
 #' @export
 
 combine_pr_manyTF <- function(files, gs, rlim=0.25) {

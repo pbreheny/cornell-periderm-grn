@@ -6,7 +6,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' readRDS('data/network/wgcna/mc2/kna10-cor-s100.rds') %>%
+#' readRDS('network/wgcna/mc2/kna10-cor-s100.rds') %>%
 #'   export('net.csv', FALSE)
 #' }
 #' @export

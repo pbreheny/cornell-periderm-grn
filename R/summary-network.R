@@ -7,7 +7,7 @@
 #' @method summary network
 #'
 #' @examples
-#' readRDS('data/network/wgcna/kna10-mc2-cor-s100.rds') %>% summary()
+#' readRDS('network/wgcna/kna10-mc2-cor-s100.rds') %>% summary()
 #' @export
 
 summary.network <- function(object, resolution=NULL, tf_only=TRUE, ...) {

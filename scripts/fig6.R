@@ -4,7 +4,7 @@
 #' of the most important findings
 
 # Read in network summary
-net <- readRDS("data/network/wgcna/kna10-mc2-cor-s100.rds") |> transform()
+net <- readRDS("network/wgcna/kna10-mc2-cor-s100.rds") |> transform()
 tf <- summary(net, tf_only = TRUE) # Don't want clustering skewed by targets
 non_tf <- summary(net, tf_only = FALSE) |>
   _[!(Gene %in% colnames(net))]

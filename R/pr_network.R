@@ -16,10 +16,10 @@
 #' tfap2a_chip10kb_gs <- make_gs('data/chip/tfap2a_chip_10kb.rds')
 #' grhl3_chip10kb_gs <- make_gs('data/chip/grhl3_chip_10kb.rds')
 #'
-#' pr_network('data/network/mir/fns-mall-s0.rds', grhl3_chip10kb_gs) %>% head
+#' pr_network('network/mir/fns-mall-s0.rds', grhl3_chip10kb_gs) %>% head
 #'
 #' allChip_10kb_gs <- many_tf_gs(list(irf6_chip10kb_gs, grhl3_chip10kb_gs, tfap2a_chip10kb_gs))
-#' pr_network('data/network/mir/fns-atac-s1.rds', allChip_10kb_gs) %>% head
+#' pr_network('network/mir/fns-atac-s1.rds', allChip_10kb_gs) %>% head
 #' @export
 
 pr_network <- function(rds, gs, rlim = 0.25, plot=FALSE) {

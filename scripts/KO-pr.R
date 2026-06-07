@@ -24,13 +24,13 @@ grhl3_combo_100kb_gs <- combine_gs(grhl3_chip100kb_gs, grhl3_KO_gs)
 tfap2a_combo_100kb_gs <- combine_gs(tfap2a_chip100kb_gs, tfap2a_KO_gs)
 
 chip_100_p_fns <- pr_plot(combine_pr(gs = list(irf6_chip100kb_gs,grhl3_chip100kb_gs,tfap2a_chip100kb_gs),
-                                     files = c('data/network/wgcna/mc2/kna10-cor-s100.rds'),
+                                     files = c('network/wgcna/mc2/kna10-cor-s100.rds'),
                                      collapse = TRUE), group = 'Network')
 KO_p_kna10 <- pr_plot(combine_pr(gs = list(cebpb_KO_gs, gata3_KO_gs, grhl3_KO_gs,
                                            irf6_KO_gs, klf17_KO_gs, tfap2a_KO_gs,
                                            znf750_KO_gs, zbtb10_KO_gs, tead3b_KO_gs,
                                            klf6a_KO_gs, grhl1_KO_gs),
-                                 files = c('data/network/wgcna/mc2/kna10-cor-s100.rds'),
+                                 files = c('network/wgcna/mc2/kna10-cor-s100.rds'),
                                  collapse = FALSE), group = 'TF', facet = 'TF')
 
 # smallest 1000 lfsr based KO gold standards
@@ -51,12 +51,12 @@ grhl3_combo_100kb_gs <- combine_gs(grhl3_chip100kb_gs, grhl3_KO_gs)
 tfap2a_combo_100kb_gs <- combine_gs(tfap2a_chip100kb_gs, tfap2a_KO_gs)
 
 chip_100_p_fns <- pr_plot(combine_pr(gs = list(irf6_chip100kb_gs,grhl3_chip100kb_gs,tfap2a_chip100kb_gs),
-                                     files = c('data/network/wgcna/mc2/kna10-cor-s100.rds'),
+                                     files = c('network/wgcna/mc2/kna10-cor-s100.rds'),
                                      collapse = TRUE), group = 'Network')
 KO_p_kna10 <- pr_plot(combine_pr(gs = list(cebpb_KO_gs, gata3_KO_gs, grhl3_KO_gs,
                                            irf6_KO_gs, klf17_KO_gs, tfap2a_KO_gs,
                                            znf750_KO_gs, zbtb10_KO_gs, tead3b_KO_gs,
                                            klf6a_KO_gs, grhl1_KO_gs),
-                                 files = c('data/network/wgcna/mc2/kna10-cor-s100.rds'),
+                                 files = c('network/wgcna/mc2/kna10-cor-s100.rds'),
                                  collapse = FALSE), group = 'TF', facet = 'TF')
 

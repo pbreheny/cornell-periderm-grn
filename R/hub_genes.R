@@ -5,9 +5,9 @@
 #' @param focus       TFs to focus on; these are colored blue while all other TFs are colored red
 #'
 #' @examples
-#' make_graph('data/network/genie/fns-genie.rds') %>% hub_genes
-#' make_graph('data/network/gl/kna-h3k-s4.rds') %>% hub_genes(15)
-#' make_graph('data/network/gl/kna-h3k-s4.rds') %>% hub_genes(15, focus=c('irf6', 'grhl3'))
+#' make_graph('network/genie/fns-genie.rds') %>% hub_genes
+#' make_graph('network/gl/kna-h3k-s4.rds') %>% hub_genes(15)
+#' make_graph('network/gl/kna-h3k-s4.rds') %>% hub_genes(15, focus=c('irf6', 'grhl3'))
 #' @export
 
 hub_genes <- function(g, n, focus) {

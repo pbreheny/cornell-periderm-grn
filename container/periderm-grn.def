@@ -12,7 +12,8 @@ From: bioconductor/r-ver:3.23
         "igraph",
         "ncvreg",
         "stringr",
-        "BiocManager"
+        "BiocManager",
+        "MetBrewer"
         ), repos = "https://cloud.r-project.org"
     )'
     Rscript -e 'BiocManager::install(c(

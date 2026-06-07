@@ -20,7 +20,7 @@ knitr::opts_chunk$set(comment = "#", echo = FALSE, message = FALSE,
                       collapse = TRUE, cache = FALSE, tidy = FALSE, fig.align = "center")
 
 # Main network
-net <- readRDS('data/network/wgcna/kna10-cor-s100.rds')
+net <- readRDS('network/wgcna/kna10-cor-s100.rds')
 g_full <- make_graph(net)
 m <- cluster_walktrap(g_full) %>% membership
 

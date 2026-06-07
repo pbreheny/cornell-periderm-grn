@@ -9,8 +9,8 @@
 #' @examples
 #' gs <- list(make_gs('data/knockout/grhl3_KO.rds', 'lfsr', selectby = "maxval", threshold = 0.01),
 #'            make_gs('data/knockout/irf6_KO.rds', 'lfsr', selectby = "maxval", threshold = 0.01))
-#' f <- c(list.files('data/network/wgcna/', pattern = "kna10-mc2-cor*", full.names = TRUE),
-#'        list.files('data/network/genie/', pattern = "kna10-gne-*", full.names = TRUE))
+#' f <- c(list.files('network/wgcna/', pattern = "kna10-mc2-cor*", full.names = TRUE),
+#'        list.files('network/genie/', pattern = "kna10-gne-*", full.names = TRUE))
 #' DT <- combine_pr(f, gs, collapse = FALSE)
 #' auc_table(DT) %>% master_hm('pAUC_Gain')
 #' @export

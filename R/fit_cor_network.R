@@ -9,12 +9,18 @@
 #' @returns An object of class `network`
 #'
 #' @examples
-#' Data <- import_expr(filter=0.25)
-#' Prior <- import_prior('m100', Data)
-#' Res <- fit_cor_network(Data, Prior, strength=1)
+#' Data <- import_expr(filter = 0.25)
+#' Prior <- import_prior("m100", Data)
+#' Res <- fit_cor_network(Data, Prior, strength = 1)
 #' @export
 
-fit_cor_network <- function(Data, Prior, filename, strength=1, type=c('cor', 'tom')) {
+fit_cor_network <- function(
+  Data,
+  Prior,
+  filename,
+  strength = 1,
+  type = c("cor", "tom")
+) {
   type <- match.arg(type)
 
   # Fit
@@ -22,8 +28,8 @@ fit_cor_network <- function(Data, Prior, filename, strength=1, type=c('cor', 'to
   diag(cr) <- 0
 
   # TOM
-  if (type == 'tom') {
-    ts <- WGCNA::TOMsimilarity(abs(cr), verbose=0)
+  if (type == "tom") {
+    ts <- WGCNA::TOMsimilarity(abs(cr), verbose = 0)
     rownames(ts) <- colnames(ts) <- rownames(cr)
     cr <- ts
   }

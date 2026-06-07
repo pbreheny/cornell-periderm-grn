@@ -21,16 +21,16 @@ rule all:
 rule fig3:
     input:
         expand(
-            "data/network/gl/kna10-mc2-s{gls}-a{gla}.rds",
+            "network/gl/kna10-mc2-s{gls}-a{gla}.rds",
             gls = [s for s, _ in gl_grid],
             gla = [a for _, a in gl_grid]
         ),
         expand(
-            "data/network/inferelator/kna10-mc2-bbsr-s{bbsrs}.rds",
+            "network/inferelator/kna10-mc2-bbsr-s{bbsrs}.rds",
             bbsrs = [s for s in strength]
         ),
         expand(
-            "data/network/inferelator/kna10-mc2-enet-a{eneta}.rds",
+            "network/inferelator/kna10-mc2-enet-a{eneta}.rds",
             eneta = [a for a in alpha]
         )
     output:
@@ -39,7 +39,14 @@ rule fig3:
         "scripts/fig3.R"
 
 rule fig5:
-    output: "figs/fig5.pdf"
+    input:
+        "network/wgcna/kna10-mc2-cor-s100.rds",
+        "data/go/cluster-a.json",
+        "data/go/cluster-b.json"
+    output:
+        "figs/fig5a.pdf",
+        "figs/fig5b.pdf",
+        "figs/fig5c.txt"
     script: "scripts/fig5.R"
 
 rule fig6:
@@ -48,7 +55,7 @@ rule fig6:
 
 rule glasso:
     output:
-        "data/network/gl/kna10-mc2-s{gls}-a{gla}.rds"
+        "network/gl/kna10-mc2-s{gls}-a{gla}.rds"
     params:
         gls_dec = lambda wildcards: float(wildcards.gls) / 100,
         gla_dec = lambda wildcards: float(wildcards.gla) / 100
@@ -57,7 +64,7 @@ rule glasso:
 
 rule inferelator_bbsr:
     output:
-        "data/network/inferelator/kna10-mc2-bbsr-s{bbsrs}.rds"
+        "network/inferelator/kna10-mc2-bbsr-s{bbsrs}.rds"
     params:
         bbsrs_dec = lambda wildcards: float(wildcards.bbsrs) / 100,
     shell:
@@ -65,8 +72,18 @@ rule inferelator_bbsr:
 
 rule inferelator_enet:
     output:
-        "data/network/inferelator/kna10-mc2-enet-a{eneta}.rds"
+        "network/inferelator/kna10-mc2-enet-a{eneta}.rds"
     params:
         eneta_dec = lambda wildcards: float(wildcards.eneta) / 100,
     shell:
         "bin/fit-inferelator enet kna10 mc2 {params.eneta_dec}"
+
+rule wgcna:
+    input:
+        "scripts/wgcna.R"
+    output:
+        expand(
+            "network/wgcna/kna10-mc2-cor-s{strength}.rds",
+            strength = strength
+        )
+    script: "scripts/wgcna.R"

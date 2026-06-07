@@ -13,8 +13,8 @@
 #' @param layout        a ggraph layout
 #'
 #' @examples
-#' make_graph('data/network/wgcna/kna10-cor-s100.rds') %>% plot_modules(nodeType = "color")
-#' make_graph('data/network/wgcna/kna10-cor-s100.rds') %>% plot_modules(nodeType = "shape")
+#' make_graph('network/wgcna/kna10-cor-s100.rds') %>% plot_modules(nodeType = "color")
+#' make_graph('network/wgcna/kna10-cor-s100.rds') %>% plot_modules(nodeType = "shape")
 #' @export
 
 plot_modules <- function(

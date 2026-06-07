@@ -12,8 +12,8 @@
 #' @param ...             Additional arguments to `igraph::graph_from_adjacency_matrix()`
 #'
 #' @examples
-#' g <- make_graph('data/network/genie/kna10-mc2-s025.rds')
-#' g <- make_graph('data/network/genie/fns-genie.rds', genes=c('grhl3', 'klf17', 'aagab', 'aar2'))
+#' g <- make_graph('network/genie/kna10-mc2-s025.rds')
+#' g <- make_graph('network/genie/fns-genie.rds', genes=c('grhl3', 'klf17', 'aagab', 'aar2'))
 #' @export
 
 make_graph <- function(grn, genes, remove_loners=TRUE) {

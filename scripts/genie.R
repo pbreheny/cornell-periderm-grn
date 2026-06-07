@@ -9,7 +9,7 @@ attr(Res, 'method') <- 'genie'
 attr(Res, 'nTrees') <- 1000
 attr(Res, 'samples') <- colnames(X)
 class(Res) <- c('network', class(Res))
-saveRDS(t(Res), 'data/network/fns-genie.rds')
+saveRDS(t(Res), 'network/fns-genie.rds')
 
 # Farrell (ccr)
 Data <- import_expr('farrell', 'ccr', 'shield')
@@ -19,7 +19,7 @@ attr(Res, 'method') <- 'genie'
 attr(Res, 'nTrees') <- 1000
 attr(Res, 'samples') <- colnames(X)
 class(Res) <- c('network', class(Res))
-saveRDS(t(Res), 'data/network/fcs-genie.rds')
+saveRDS(t(Res), 'network/fcs-genie.rds')
 
 # Kenny
 Data <- import_expr('kenny')
@@ -29,14 +29,14 @@ attr(Res, 'method') <- 'genie'
 attr(Res, 'nTrees') <- 1000
 attr(Res, 'samples') <- colnames(X)
 class(Res) <- c('network', class(Res))
-saveRDS(t(Res), 'data/network/kna-genie.rds')
+saveRDS(t(Res), 'network/kna-genie.rds')
 
 
 # new way
 #' Fit genie networks
 #'
 #' Input: Raw data via import_expr()
-#' Output: `data/network/genie/*`
+#' Output: `network/genie/*`
 devtools::load_all(quiet=TRUE)
 
 # Fit networks
@@ -47,7 +47,7 @@ for (filter in c(0.10, 0.15, 0.20, 0.25)) {
   id <- paste0('kna', round(filter*100))
   mc2 <- import_prior('mc2', kna)
   for (s in seq(0, 4, 0.25)) {
-      file <- paste0('data/network/genie/', id, '-', 'gne', '-s', sprintf('%0.3d', as.integer(100*s)), '.rds')
+      file <- paste0('network/genie/', id, '-', 'gne', '-s', sprintf('%0.3d', as.integer(100*s)), '.rds')
       fit_genie_network(kna, mc2, file, strength=s)
   }
 }

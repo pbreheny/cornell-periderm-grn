@@ -24,9 +24,9 @@ fit_inferelator_network <- function(
   prefix <- stringi::stri_rand_strings(1, 12)
 
   # Write data for python
-  fwrite(Data$Exp, paste0('data/network/inferelator/', prefix, '-exprs.tsv'), sep='\t')
-  writeLines(Data$tf, paste0('data/network/inferelator/', prefix, '-tf.txt'))
-  fwrite(Prior, paste0('data/network/inferelator/', prefix, '-prior.tsv'), sep='\t')
+  fwrite(Data$Exp, paste0('network/inferelator/', prefix, '-exprs.tsv'), sep='\t')
+  writeLines(Data$tf, paste0('network/inferelator/', prefix, '-tf.txt'))
+  fwrite(Prior, paste0('network/inferelator/', prefix, '-prior.tsv'), sep='\t')
 
   # Run python script
   if (type == 'bbsr') {
@@ -41,7 +41,7 @@ fit_inferelator_network <- function(
   x <- matrix(0, length(Data$Exp$Gene), length(Data$tf), dimnames=list(Data$Exp$Gene, Data$tf))
   s <- matrix(0, length(Data$Exp$Gene), length(Data$tf), dimnames=list(Data$Exp$Gene, Data$tf))
   for (i in 1:reps) {
-    DT <- fread(glue('data/network/inferelator/{prefix}/random_seed_{i}/network.tsv.gz'))
+    DT <- fread(glue('network/inferelator/{prefix}/random_seed_{i}/network.tsv.gz'))
     for (i in 1:nrow(DT)) {
       x[DT$target[i], DT$regulator[i]] <- x[DT$target[i], DT$regulator[i]] + DT[i]$combined_confidences
       s[DT$target[i], DT$regulator[i]] <- s[DT$target[i], DT$regulator[i]] + DT[i]$beta.sign.sum
@@ -51,10 +51,10 @@ fit_inferelator_network <- function(
 
   # Clean up
   if (clean) {
-    unlink(glue('data/network/inferelator/{prefix}'), recursive=TRUE)
-    unlink(glue('data/network/inferelator/{prefix}-exprs.tsv'))
-    unlink(glue('data/network/inferelator/{prefix}-prior.tsv'))
-    unlink(glue('data/network/inferelator/{prefix}-tf.txt'))
+    unlink(glue('network/inferelator/{prefix}'), recursive=TRUE)
+    unlink(glue('network/inferelator/{prefix}-exprs.tsv'))
+    unlink(glue('network/inferelator/{prefix}-prior.tsv'))
+    unlink(glue('network/inferelator/{prefix}-tf.txt'))
   }
 
   # Save / return

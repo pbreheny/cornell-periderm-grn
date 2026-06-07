@@ -25,19 +25,19 @@
 #' grhl3_combo_100kb_gs <- combine_gs(grhl3_chip100kb_gs, grhl3_KO_gs)
 #' tfap2a_combo_100kb_gs <- combine_gs(tfap2a_chip100kb_gs, tfap2a_KO_gs)
 #' chip_100_p_fns <- pr_plot(combine_pr(gs = list(irf6_chip100kb_gs,grhl3_chip100kb_gs,tfap2a_chip100kb_gs),
-#'                           files = c('data/network/genie/fns-genie.rds', 'data/network/wgcna/kna10-cor-s100.rds', 'data/network/mir/fns-mall-s0.rds'),
+#'                           files = c('network/genie/fns-genie.rds', 'network/wgcna/kna10-cor-s100.rds', 'network/mir/fns-mall-s0.rds'),
 #'                           collapse = TRUE), group = 'Network')
 #' KO_p_fns <- pr_plot(combine_pr(gs = list(cebpb_KO_gs, gata3_KO_gs, grhl3_KO_gs, irf6_KO_gs, klf17_KO_gs, tfap2a_KO_gs, znf750_KO_gs),
-#'                     files = c('data/network/genie/fns-genie.rds', 'data/network/wgcna/kna10-cor-s100.rds', 'data/network/mir/fns-mall-s0.rds'),
+#'                     files = c('network/genie/fns-genie.rds', 'network/wgcna/kna10-cor-s100.rds', 'network/mir/fns-mall-s0.rds'),
 #'                     collapse = TRUE), group = 'Network')
 #' combo_100_p_fns <- pr_plot(combine_pr(gs = list(irf6_combo_100kb_gs, grhl3_combo_100kb_gs, tfap2a_combo_100kb_gs),
-#'                            files = c('data/network/genie/fns-genie.rds', 'data/network/wgcna/kna10-cor-s100.rds', 'data/network/mir/fns-mall-s0.rds'),
+#'                            files = c('network/genie/fns-genie.rds', 'network/wgcna/kna10-cor-s100.rds', 'network/mir/fns-mall-s0.rds'),
 #'                            collapse = TRUE), group = 'Network')
 #'
 #' miraldi_plot(chip_dat = list(irf6_chip100kb_gs, grhl3_chip100kb_gs, tfap2a_chip100kb_gs),
 #'              KO_dat = list(cebpb_KO_gs, gata3_KO_gs, grhl3_KO_gs, irf6_KO_gs, klf17_KO_gs, tfap2a_KO_gs, znf750_KO_gs),
 #'              combo_dat = list(irf6_combo_100kb_gs, grhl3_combo_100kb_gs, tfap2a_combo_100kb_gs),
-#'              networks = c('data/network/genie/fns-genie.rds', 'data/network/wgcna/kna10-cor-s100.rds', 'data/network/mir/fns-mall-s0.rds'),
+#'              networks = c('network/genie/fns-genie.rds', 'network/wgcna/kna10-cor-s100.rds', 'network/mir/fns-mall-s0.rds'),
 #'              title = 'Farrell Shield Stage 100 kb Flanking Region')
 #' miraldi_plot(chip_dat = chip_100_p_fns, KO_dat = KO_p_fns, combo_dat = combo_100_p_fns, title = 'Farrell Shield Stage 100kb Flanking Region')
 #' @export

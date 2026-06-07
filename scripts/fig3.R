@@ -1,9 +1,5 @@
 #' Create figure 3
 devtools::load_all(quiet = TRUE)
-library(superheat)
-library(ggplotify)
-library(ggpubr)
-library(MetBrewer)
 
 # Import enrichment
 enr <- import_enr()
@@ -121,22 +117,22 @@ pr_combo <- combine_pr(
   ),
   files = c(
     list.files(
-      path = "data/network/gl",
+      path = "network/gl",
       pattern = "^kna10-mc2.*a001\\.rds$",
       full.names = TRUE
     ),
     list.files(
-      path = "data/network/wgcna/",
+      path = "network/wgcna/",
       pattern = "kna10-mc2-cor-*",
       full.names = TRUE
     ),
     list.files(
-      path = "data/network/inferelator",
+      path = "network/inferelator",
       pattern = "kna10-mc2-*",
       full.names = TRUE
     ),
     list.files(
-      path = "data/network/genie/",
+      path = "network/genie/",
       pattern = "kna10-mc2-*",
       full.names = TRUE
     )
@@ -153,22 +149,22 @@ pr_combo_sep <- combine_pr(
   ),
   files = c(
     list.files(
-      path = "data/network/gl",
+      path = "network/gl",
       pattern = "^kna10-mc2.*a001\\.rds$",
       full.names = TRUE
     ),
     list.files(
-      path = "data/network/wgcna/",
+      path = "network/wgcna/",
       pattern = "kna10-mc2-cor-*",
       full.names = TRUE
     ),
     list.files(
-      path = "data/network/inferelator",
+      path = "network/inferelator",
       pattern = "kna10-mc2-*",
       full.names = TRUE
     ),
     list.files(
-      path = "data/network/genie/",
+      path = "network/genie/",
       pattern = "kna10-mc2-*",
       full.names = TRUE
     )
@@ -197,22 +193,22 @@ pr_combo_ko <- combine_pr(
   ),
   files = c(
     list.files(
-      path = "data/network/gl",
+      path = "network/gl",
       pattern = "^kna10-mc2.*a001\\.rds$",
       full.names = TRUE
     ),
     list.files(
-      path = "data/network/wgcna/",
+      path = "network/wgcna/",
       pattern = "kna10-mc2-cor-*",
       full.names = TRUE
     ),
     list.files(
-      path = "data/network/inferelator",
+      path = "network/inferelator",
       pattern = "kna10-mc2-*",
       full.names = TRUE
     ),
     list.files(
-      path = "data/network/genie/",
+      path = "network/genie/",
       pattern = "kna10-mc2-*",
       full.names = TRUE
     )
@@ -235,22 +231,22 @@ pr_combo_sep_ko <- combine_pr(
   ),
   files = c(
     list.files(
-      path = "data/network/gl",
+      path = "network/gl",
       pattern = "^kna10-mc2.*a001\\.rds$",
       full.names = TRUE
     ),
     list.files(
-      path = "data/network/wgcna/",
+      path = "network/wgcna/",
       pattern = "kna10-mc2-cor-*",
       full.names = TRUE
     ),
     list.files(
-      path = "data/network/inferelator",
+      path = "network/inferelator",
       pattern = "kna10-mc2-*",
       full.names = TRUE
     ),
     list.files(
-      path = "data/network/genie/",
+      path = "network/genie/",
       pattern = "kna10-mc2-*",
       full.names = TRUE
     )
@@ -330,7 +326,7 @@ genes <- c(
 )
 
 # network plot
-readRDS("data/network/wgcna/kna10-mc2-cor-s100.rds") |>
+readRDS("network/wgcna/kna10-mc2-cor-s100.rds") |>
   transform() |>
   make_graph() |>
   plot_modules(
@@ -341,7 +337,7 @@ readRDS("data/network/wgcna/kna10-mc2-cor-s100.rds") |>
     background = "white"
   )
 
-readRDS("data/network/wgcna/kna10-mc2-cor-s100.rds") |>
+readRDS("network/wgcna/kna10-mc2-cor-s100.rds") |>
   transform() |>
   make_graph() |>
   plot_modules(percentile = 0.1, n_lab = 11, background = "white")

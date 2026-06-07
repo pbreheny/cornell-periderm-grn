@@ -27,13 +27,13 @@ Data <- import_expr(source, preprocess, subset, filter)
 Prior <- import_prior(opt$prior, Data)
 
 # Fit networks
-if (!dir.exists("data/network/gl")) dir.create("data/network/gl", recursive = TRUE)
+if (!dir.exists("network/gl")) dir.create("network/gl", recursive = TRUE)
 s_id <- sprintf('%0.3d', as.integer(100 * as.numeric(opt$strength)))
 a_id <- sprintf('%0.3d', as.integer(100 * as.numeric(opt$alpha)))
 if (opt$method == 'gl') {
-  fn <- glue("data/network/gl/{opt$data}-{opt$prior}-s{s_id}-a{a_id}.rds")
+  fn <- glue("network/gl/{opt$data}-{opt$prior}-s{s_id}-a{a_id}.rds")
   fit_glasso_network(Data, Prior, fn, strength=as.numeric(opt$strength), alpha=as.numeric(opt$alpha))
 } else {
-  fn <- glue('data/network/mir/{opt$data}-{opt$prior}-s{s_id}.rds')
+  fn <- glue('network/mir/{opt$data}-{opt$prior}-s{s_id}.rds')
   fit_stability_network(Data, Prior, fn, strength=as.numeric(opt$strength))
 }

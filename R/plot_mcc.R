@@ -6,7 +6,7 @@
 #'
 #' @examples
 #' irf6_gs <- make_gs('data/chip/irf6_chip_10kb.rds')
-#' plot_mcc('data/network/gl/kna-atac-s0.rds', irf6_gs)
+#' plot_mcc('network/gl/kna-atac-s0.rds', irf6_gs)
 #' @export
 
 plot_mcc <- function(rds, gs, tf) {

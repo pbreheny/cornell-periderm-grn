@@ -3,8 +3,8 @@
 .Rhistory
 .RData
 .Ruserdata
-data/network
-docs/
 .snakemake
-.inferelator-installed
+
+network
+figs
 container/*.sif

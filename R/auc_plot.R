@@ -11,7 +11,7 @@
 #' @examples
 #' gs <- list(make_gs('data/knockout/grhl3_KO.rds', 'lfsr < 0.01'),
 #'            make_gs('data/knockout/irf6_KO.rds', 'lfsr < 0.01'))
-#' f <- list.files('data/network/gl/', pattern='fns-atac*', full.names=TRUE)
+#' f <- list.files('network/gl/', pattern='fns-atac*', full.names=TRUE)
 #' DT <- combine_pr(f, gs)
 #' auc_table(DT) %>% auc_plot('Strength', 'TF')
 #' @export

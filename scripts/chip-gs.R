@@ -1,6 +1,6 @@
 #' Define chip "gold standard"
 
-devtools::load_all(quiet = TRUE)
+source("scripts/setup.R")
 suppressPackageStartupMessages({
   library(rtracklayer)
   library(GenomicRanges)

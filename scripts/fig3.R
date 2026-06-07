@@ -1,5 +1,5 @@
 #' Create figure 3
-devtools::load_all(quiet = TRUE)
+source("scripts/setup.R")
 
 # Import enrichment
 enr <- import_enr()

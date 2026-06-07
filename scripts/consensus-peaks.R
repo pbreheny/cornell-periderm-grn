@@ -1,6 +1,6 @@
 #' Annika: What does this script do?
 
-devtools::load_all()
+source("scripts/setup.R")
 library(rtracklayer)
 library(GenomicRanges)
 library(org.Dr.eg.db)

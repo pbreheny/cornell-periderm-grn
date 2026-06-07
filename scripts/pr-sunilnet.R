@@ -1,4 +1,4 @@
-devtools::load_all()
+source("scripts/setup.R")
 
 # Setup -------------------------------------------------------------------
 ## Retrieve Gold Standard Networks ##

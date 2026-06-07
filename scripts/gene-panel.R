@@ -12,7 +12,7 @@
 #+ include=FALSE, purl=FALSE
 
 # Display options
-devtools::load_all()
+source("scripts/setup.R")
 library(knitr)
 library(gtsummary)
 knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))

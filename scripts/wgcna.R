@@ -4,7 +4,7 @@
 #'   - Raw data via import_expr()
 #'   - Prior via import_prior()
 #' Output: `network/wgcna/*`
-devtools::load_all(quiet = TRUE)
+source("scripts/setup.R")
 
 # Fit networks
 # cor = correlation

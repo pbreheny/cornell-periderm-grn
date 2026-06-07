@@ -1,5 +1,5 @@
 #' Create Figure 5 for paper: Illustrate modules / clustering for top network
-devtools::load_all(quiet = TRUE)
+source("scripts/setup.R")
 dir.create("figs", showWarnings = FALSE)
 
 # Load network

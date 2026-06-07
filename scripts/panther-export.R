@@ -6,7 +6,7 @@
 #'
 #' Overrepresentation: Binary, unsatisfying
 #' Enrichment: Continuous, better
-devtools::load_all(quiet = TRUE)
+source("scripts/setup.R")
 
 # Targets by cluster
 net <- readRDS("network/wgcna/mc2/kna10-cor-s100.rds")

@@ -1,6 +1,6 @@
 #' Annika: What does this script do?
 
-devtools::load_all()
+source("scripts/setup.R")
 library(DESeq2)
 library(org.Dr.eg.db)
 library(readxl)

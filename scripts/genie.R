@@ -1,43 +1,9 @@
-suppressPackageStartupMessages(devtools::load_all())
-library(GENIE3)
-
-# Farrell (none)
-Data <- import_expr('farrell', 'none', 'shield')
-X <- dtx(Data$Exp)
-Res <- GENIE3(X, regulators=Data$tf, nCores=4)
-attr(Res, 'method') <- 'genie'
-attr(Res, 'nTrees') <- 1000
-attr(Res, 'samples') <- colnames(X)
-class(Res) <- c('network', class(Res))
-saveRDS(t(Res), 'network/fns-genie.rds')
-
-# Farrell (ccr)
-Data <- import_expr('farrell', 'ccr', 'shield')
-X <- dtx(Data$Exp)
-Res <- GENIE3(X, regulators=Data$tf, nCores=4)
-attr(Res, 'method') <- 'genie'
-attr(Res, 'nTrees') <- 1000
-attr(Res, 'samples') <- colnames(X)
-class(Res) <- c('network', class(Res))
-saveRDS(t(Res), 'network/fcs-genie.rds')
-
-# Kenny
-Data <- import_expr('kenny')
-X <- dtx(Data$Exp)
-Res <- GENIE3(X, regulators=Data$tf, nCores=4)
-attr(Res, 'method') <- 'genie'
-attr(Res, 'nTrees') <- 1000
-attr(Res, 'samples') <- colnames(X)
-class(Res) <- c('network', class(Res))
-saveRDS(t(Res), 'network/kna-genie.rds')
-
-
-# new way
 #' Fit genie networks
 #'
 #' Input: Raw data via import_expr()
 #' Output: `network/genie/*`
-devtools::load_all(quiet=TRUE)
+source("scripts/setup.R")
+library(GENIE3)
 
 # Fit networks
 # cr = correlation

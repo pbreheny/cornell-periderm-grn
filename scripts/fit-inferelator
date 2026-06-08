@@ -10,26 +10,26 @@ Arguments:
 source("scripts/setup.R")
 opt <- docopt::docopt(doc)
 # For interactive use:
-# opt <- list(method='gl', data='kna10', prior='m100', strength='2', a='0.01')
+# opt <- list(type='bbsr', data='kna10', prior='mc2', x='2')
+# opt <- list(type='bbsr', data='kna10', prior='mc2', x='0.01')
 
 # Read in data
-if (!str_detect('kna10', '[:lower:][:lower:][:lower:][:digit:][:digit:]')) {
+if (!str_detect("kna10", "[:lower:][:lower:][:lower:][:digit:][:digit:]")) {
   stop('Error in "data" argument: must be of form "kna10"', call. = FALSE)
 }
-source <- switch(substr(opt$data, 1, 1), f='farrell', k='kenny')
-preprocess <- switch(substr(opt$data, 2, 2), n='none', i='imp', c='ccr', b='both')
-subset <- switch(substr(opt$data, 3, 3), a='all', s='shield')
-filter <- as.numeric(substr(opt$data, 4, 5))/100
+source <- switch(substr(opt$data, 1, 1), f = "farrell", k = "kenny")
+preprocess <- switch(substr(opt$data, 2, 2), n = "none", i = "imp", c = "ccr", b = "both")
+subset <- switch(substr(opt$data, 3, 3), a = "all", s = "shield")
+filter <- as.numeric(substr(opt$data, 4, 5)) / 100
 Data <- import_expr(source, preprocess, subset, filter)
 Prior <- import_prior(opt$prior, Data)
 
 # Fit network
-if (!dir.exists("network/inferelator")) dir.create("network/inferelator", recursive = TRUE)
-id <- sprintf('%0.3d', as.integer(100 * as.numeric(opt$x)))
-if (opt$type == 'bbsr') {
+id <- sprintf("%0.3d", as.integer(100 * as.numeric(opt$x)))
+if (opt$type == "bbsr") {
   fn <- glue::glue("network/inferelator/{opt$data}-{opt$prior}-{opt$type}-s{id}.rds")
-  fit_inferelator_network(Data, Prior, fn, type = "bbsr", strength = opt$x) 
+  fit_inferelator_network(Data, Prior, fn, type = "bbsr", strength = opt$x)
 } else {
   fn <- glue::glue("network/inferelator/{opt$data}-{opt$prior}-{opt$type}-a{id}.rds")
-  fit_inferelator_network(Data, Prior, fn, type = 'enet', alpha = opt$x) 
+  fit_inferelator_network(Data, Prior, fn, type = "enet", alpha = opt$x)
 }

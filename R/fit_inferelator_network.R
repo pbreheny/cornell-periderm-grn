@@ -12,38 +12,47 @@
 #' @returns An object of class `network`
 #'
 #' @examples
-#' Data <- import_expr(filter=0.5)
-#' Prior <- import_prior('mc2', Data)
-#' Res <- fit_inferelator_network(Data, Prior, type='bbsr', strength=1, reps=2)
+#' Data <- import_expr(filter = 0.5)
+#' Prior <- import_prior("mc2", Data)
+#' Res <- fit_inferelator_network(Data, Prior, type = "bbsr", strength = 1, reps = 2)
 #' @export
 
 fit_inferelator_network <- function(
-    Data, Prior, filename, type=c('bbsr', 'enet'),
-    strength=NULL, alpha=NULL, reps=5, clean=TRUE) {
+  Data,
+  Prior,
+  filename,
+  type = c("bbsr", "enet"),
+  strength = NULL,
+  alpha = NULL,
+  reps = 5,
+  clean = TRUE
+) {
   type <- match.arg(type)
   prefix <- stringi::stri_rand_strings(1, 12)
 
   # Write data for python
-  fwrite(Data$Exp, paste0('network/inferelator/', prefix, '-exprs.tsv'), sep='\t')
-  writeLines(Data$tf, paste0('network/inferelator/', prefix, '-tf.txt'))
-  fwrite(Prior, paste0('network/inferelator/', prefix, '-prior.tsv'), sep='\t')
+  dir.create(glue("network/inferelator/{prefix}"), recursive = TRUE, showWarnings = FALSE)
+  fwrite(Data$Exp, glue("network/inferelator/{prefix}-exprs.tsv"), sep = "\t")
+  writeLines(Data$tf, glue("network/inferelator/{prefix}-tf.txt"))
+  fwrite(Prior, glue("network/inferelator/{prefix}-prior.tsv"), sep = "\t")
 
   # Run python script
-  if (type == 'bbsr') {
-    cmd <- glue('scripts/fit-inferelator.py {prefix} bbsr {strength} {reps}')
+  if (type == "bbsr") {
+    cmd <- glue("scripts/fit-inferelator.py {prefix} bbsr {strength} {reps}")
   } else {
-    cmd <- glue('scripts/fit-inferelator.py {prefix} enet {alpha} {reps}')
+    cmd <- glue("scripts/fit-inferelator.py {prefix} enet {alpha} {reps}")
   }
-  err <- system(cmd, intern=TRUE, ignore.stderr=TRUE)
-  if (!is.null(attr(err, 'status'))) stop("Error in running python code")
+  err <- system(cmd, intern = TRUE, ignore.stderr = TRUE)
+  if (!is.null(attr(err, "status"))) stop("Error in running python code")
 
   # Process inferelator output
-  x <- matrix(0, length(Data$Exp$Gene), length(Data$tf), dimnames=list(Data$Exp$Gene, Data$tf))
-  s <- matrix(0, length(Data$Exp$Gene), length(Data$tf), dimnames=list(Data$Exp$Gene, Data$tf))
+  x <- matrix(0, length(Data$Exp$Gene), length(Data$tf), dimnames = list(Data$Exp$Gene, Data$tf))
+  s <- matrix(0, length(Data$Exp$Gene), length(Data$tf), dimnames = list(Data$Exp$Gene, Data$tf))
   for (i in 1:reps) {
-    DT <- fread(glue('network/inferelator/{prefix}/random_seed_{i}/network.tsv.gz'))
+    DT <- fread(glue("network/inferelator/{prefix}/random_seed_{i}/network.tsv.gz"))
     for (i in 1:nrow(DT)) {
-      x[DT$target[i], DT$regulator[i]] <- x[DT$target[i], DT$regulator[i]] + DT[i]$combined_confidences
+      x[DT$target[i], DT$regulator[i]] <- x[DT$target[i], DT$regulator[i]] +
+        DT[i]$combined_confidences
       s[DT$target[i], DT$regulator[i]] <- s[DT$target[i], DT$regulator[i]] + DT[i]$beta.sign.sum
     }
   }
@@ -51,10 +60,10 @@ fit_inferelator_network <- function(
 
   # Clean up
   if (clean) {
-    unlink(glue('network/inferelator/{prefix}'), recursive=TRUE)
-    unlink(glue('network/inferelator/{prefix}-exprs.tsv'))
-    unlink(glue('network/inferelator/{prefix}-prior.tsv'))
-    unlink(glue('network/inferelator/{prefix}-tf.txt'))
+    unlink(glue("network/inferelator/{prefix}"), recursive = TRUE)
+    unlink(glue("network/inferelator/{prefix}-exprs.tsv"))
+    unlink(glue("network/inferelator/{prefix}-prior.tsv"))
+    unlink(glue("network/inferelator/{prefix}-tf.txt"))
   }
 
   # Save / return
@@ -62,6 +71,6 @@ fit_inferelator_network <- function(
     invisible(out)
   } else {
     saveRDS(out, filename)
-    cat(crayon::green$bold('Output saved:', filename, '\n'))
+    cat(crayon::green$bold("Output saved:", filename, "\n"))
   }
 }

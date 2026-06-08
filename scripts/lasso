@@ -12,9 +12,8 @@ Arguments:
   strength   Strength of prior in lasso model [number]
   alpha      Elastic net parameter [number between 0 and 1]
 " -> doc
-suppressMessages(library(docopt))
-opt <- docopt(doc)
-devtools::load_all(quiet = TRUE)
+source("scripts/setup.R")
+opt <- docopt::docopt(doc)
 # For interactive use:
 # opt <- list(method='gl', data='kna25', prior='mc2', strength='2', alpha='0.75')
 

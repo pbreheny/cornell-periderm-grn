@@ -5,6 +5,7 @@ From: bioconductor/r-ver:3.23
     Rscript -e 'install.packages(c(
         "ashr",
         "data.table",
+        "docopt",
         "forcats",
         "glmnet",
         "glue",

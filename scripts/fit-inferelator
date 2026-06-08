@@ -7,15 +7,14 @@ Arguments:
   prior      Which prior to use? See import_prior() [string]
   x          Strength of prior (bbsr) or alpha (enet) [number]
 " -> doc
-suppressMessages(library(docopt))
-opt <- docopt(doc)
-suppressPackageStartupMessages(devtools::load_all())
+source("scripts/setup.R")
+opt <- docopt::docopt(doc)
 # For interactive use:
 # opt <- list(method='gl', data='kna10', prior='m100', strength='2', a='0.01')
 
 # Read in data
 if (!str_detect('kna10', '[:lower:][:lower:][:lower:][:digit:][:digit:]')) {
-  stop('Error in "data" argument: must be of form "kna10"')
+  stop('Error in "data" argument: must be of form "kna10"', call. = FALSE)
 }
 source <- switch(substr(opt$data, 1, 1), f='farrell', k='kenny')
 preprocess <- switch(substr(opt$data, 2, 2), n='none', i='imp', c='ccr', b='both')

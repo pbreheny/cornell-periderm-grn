@@ -2,6 +2,7 @@
 #'
 #' This is similar in content to scripts/gene-panel.r, but creates figures out
 #' of the most important findings
+source("scripts/setup.R")
 
 # Read in network summary
 net <- readRDS("network/wgcna/kna10-mc2-cor-s100.rds") |> transform()
@@ -58,4 +59,4 @@ f6c <- qbox(tf[Cluster == 1], Centrality, Panel) +
 
 # Assemble into a figure
 gridExtra::grid.arrange(f6a, f6b, f6c) |>
-  ggsave(filename = "scripts/out/fig6.pdf", height = 6, width = 4)
+  ggsave(filename = "figs/fig6.pdf", height = 6, width = 4)

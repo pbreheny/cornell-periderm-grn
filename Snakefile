@@ -52,6 +52,8 @@ rule fig5:
     script: "scripts/fig5.R"
 
 rule fig6:
+    input:
+        "network/wgcna/kna10-mc2-cor-s100.rds"
     output: "figs/fig6.pdf"
     script: "scripts/fig6.R"
 

@@ -11,7 +11,7 @@ source("scripts/setup.R")
 opt <- docopt::docopt(doc)
 # For interactive use:
 # opt <- list(type='bbsr', data='kna10', prior='mc2', x='2')
-# opt <- list(type='bbsr', data='kna10', prior='mc2', x='0.01')
+# opt <- list(type='enet', data='kna10', prior='mc2', x='0.01')
 
 # Read in data
 if (!str_detect("kna10", "[:lower:][:lower:][:lower:][:digit:][:digit:]")) {

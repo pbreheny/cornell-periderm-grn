@@ -2,6 +2,11 @@ Bootstrap: docker
 From: bioconductor/r-ver:3.23
 
 %post
+    # Install system dependencies
+    apt-get update && apt-get install -y \
+        git
+
+    # R packages
     Rscript -e 'install.packages(c(
         "ashr",
         "data.table",
@@ -25,6 +30,7 @@ From: bioconductor/r-ver:3.23
         "DESeq2"
     ))'
 
+    # Python packages
     python3 -m venv /opt/venv
     /opt/venv/bin/pip install docopt
     /opt/venv/bin/pip install "git+https://github.com/flatironinstitute/inferelator"

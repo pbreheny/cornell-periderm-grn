@@ -26,8 +26,8 @@ From: bioconductor/r-ver:3.23
     ))'
 
     python3 -m venv /opt/venv
-    /opt/venv/bin/pip install docopt inferelator "numpy<2"
-
+    /opt/venv/bin/pip install docopt
+    /opt/venv/bin/pip install "git+https://github.com/flatironinstitute/inferelator"
 
 %environment
     export PATH=/opt/venv/bin:$PATH

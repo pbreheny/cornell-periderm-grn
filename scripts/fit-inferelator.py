@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Usage:
-  inferelator.py <prefix> <method> <x> <reps>
+  fit-inferelator.py <prefix> <method> <x> <reps>
 
 Arguments:
   <prefix>  Input data is <prefix>-exprs.tsv, <prefix>-prior.tsv, ...
@@ -38,15 +38,20 @@ if __name__ == '__main__' and local_engine:
     MPControl.connect()
 
 def set_up_workflow(wkf):
-    wkf.set_file_paths(input_dir=DATA_DIR,
-                       output_dir=OUTPUT_DIR,
-                       tf_names_file=TF_LIST_FILE_NAME,
-                       priors_file=PRIORS_FILE_NAME)
+    wkf.set_file_paths(
+        input_dir=DATA_DIR,
+        output_dir=OUTPUT_DIR,
+        tf_names_file=TF_LIST_FILE_NAME,
+        priors_file=PRIORS_FILE_NAME
+    )
     wkf.set_expression_file(tsv=EXPRESSION_FILE_NAME)
     wkf.set_file_properties(expression_matrix_columns_are_genes=False)
     wkf.set_network_data_flags(use_no_gold_standard=True)
     wkf.set_run_parameters(num_bootstraps=5)
-    wkf.set_crossvalidation_parameters(split_gold_standard_for_crossvalidation=True, cv_split_ratio=0.2)
+    wkf.set_crossvalidation_parameters(
+        split_gold_standard_for_crossvalidation=True,
+        cv_split_ratio=0.2
+    )
     return wkf
 
 # Create a worker
@@ -55,12 +60,19 @@ if arg['<method>'] == 'bbsr':
     worker = inferelator_workflow(regression="bbsr", workflow="single-cell")
     worker = set_up_workflow(worker)
     worker.append_to_path("output_dir", arg['<prefix>'])
-    worker.set_regression_parameters(prior_weight=w)
+    worker.set_regression_parameters(
+        prior_weight=w,
+        eps=0.1
+    )
 elif arg['<method>'] == 'enet':
     worker = inferelator_workflow(regression="elasticnet", workflow="single-cell")
     worker = set_up_workflow(worker)
     worker.append_to_path("output_dir", arg['<prefix>'])
-    worker.set_regression_parameters(l1_ratio=float(arg['<x>']), max_iter=2000)
+    worker.set_regression_parameters(
+        l1_ratio=float(arg['<x>']),
+        max_iter=2000,
+        eps=0.1
+    )
 
 # Create a crossvalidation wrapper
 cv_wrap = CrossValidationManager(worker)

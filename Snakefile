@@ -67,6 +67,7 @@ rule glasso:
         "scripts/lasso gl kna10 mc2 {params.gls_dec} {params.gla_dec}"
 
 rule inferelator_bbsr:
+    threads: 5
     output:
         "network/inferelator/kna10-mc2-bbsr-s{bbsrs}.rds"
     params:
@@ -75,6 +76,7 @@ rule inferelator_bbsr:
         "scripts/fit-inferelator bbsr kna10 mc2 {params.bbsrs_dec}"
 
 rule inferelator_enet:
+    threads: 5
     output:
         "network/inferelator/kna10-mc2-enet-a{eneta}.rds"
     params:

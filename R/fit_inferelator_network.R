@@ -48,12 +48,13 @@ fit_inferelator_network <- function(
   # Process inferelator output
   x <- matrix(0, length(Data$Exp$Gene), length(Data$tf), dimnames = list(Data$Exp$Gene, Data$tf))
   s <- matrix(0, length(Data$Exp$Gene), length(Data$tf), dimnames = list(Data$Exp$Gene, Data$tf))
-  for (i in 1:reps) {
-    DT <- fread(glue("network/inferelator/{prefix}/random_seed_{i}/network.tsv.gz"))
-    for (i in 1:nrow(DT)) {
-      x[DT$target[i], DT$regulator[i]] <- x[DT$target[i], DT$regulator[i]] +
-        DT[i]$combined_confidences
-      s[DT$target[i], DT$regulator[i]] <- s[DT$target[i], DT$regulator[i]] + DT[i]$beta.sign.sum
+  for (rep in 1:reps) {
+    DT <- fread(glue("network/inferelator/{prefix}/random_seed_{rep}/network.tsv.gz"))
+    DT <- DT[target %in% rownames(x) & regulator %in% colnames(x) & !is.na(combined_confidences)]
+    for (j in 1:nrow(DT)) {
+      x[DT$target[j], DT$regulator[j]] <- x[DT$target[j], DT$regulator[j]] +
+        DT[j]$combined_confidences
+      s[DT$target[j], DT$regulator[j]] <- s[DT$target[j], DT$regulator[j]] + DT[j]$beta.sign.sum
     }
   }
   out <- network(sign(s) * x / reps)

@@ -22,7 +22,8 @@ From: bioconductor/r-ver:3.23
         "shadowtext",
         "stringr",
         "BiocManager",
-        "MetBrewer"
+        "MetBrewer",
+        "R.utils"
         ), repos = "https://cloud.r-project.org"
     )'
     Rscript -e 'BiocManager::install(c(

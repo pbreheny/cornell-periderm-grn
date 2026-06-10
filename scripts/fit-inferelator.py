@@ -56,13 +56,11 @@ def set_up_workflow(wkf):
 
 # Create a worker
 if arg['<method>'] == 'bbsr':
-    w = 1 + float(arg['<x>'])
     worker = inferelator_workflow(regression="bbsr", workflow="single-cell")
     worker = set_up_workflow(worker)
     worker.append_to_path("output_dir", arg['<prefix>'])
     worker.set_regression_parameters(
-        prior_weight=w,
-        eps=0.1
+        prior_weight=1 + float(arg['<x>'])
     )
 elif arg['<method>'] == 'enet':
     worker = inferelator_workflow(regression="elasticnet", workflow="single-cell")

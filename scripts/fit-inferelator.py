@@ -25,16 +25,12 @@ TF_LIST_FILE_NAME = arg['<prefix>'] + '-tf.txt'
 
 CV_SEED = list(range(1, int(arg['<reps>'])+1))
 
-# Multiprocessing uses the pathos implementation of multiprocessing (with dill instead of cPickle)
-# This is suited for a single computer but will not work on a distributed cluster
+import os
 
-n_cores_local = 1
-local_engine = True
+n_cores_local = int(os.environ.get("NSLOTS", os.cpu_count()))
 
-# Multiprocessing needs to be protected with the if __name__ == 'main' pragma
-if __name__ == '__main__' and local_engine:
-    MPControl.set_multiprocess_engine("multiprocessing")
-    MPControl.client.processes = n_cores_local
+if __name__ == '__main__':
+    MPControl.set_multiprocess_engine("multiprocessing", processes=n_cores_local)
     MPControl.connect()
 
 def set_up_workflow(wkf):

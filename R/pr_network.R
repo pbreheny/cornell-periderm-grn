@@ -51,19 +51,20 @@ pr_network <- function(rds, gs, rlim = 0.25, plot = FALSE) {
   DT <- DT[target != TF]
 
   # Calculate sensitivity, specificity, precision
-  threshold <- sort(unique(DT$value))
-  TP <- sapply(threshold, function(x) {
-    sum(DT$value >= x & DT$truth == 1)
-  })
-  TN <- sapply(threshold, function(x) {
-    sum(DT$value < x & DT$truth == 0)
-  })
-  FP <- sapply(threshold, function(x) {
-    sum(DT$value >= x & DT$truth == 0)
-  })
-  FN <- sapply(threshold, function(x) {
-    sum(DT$value < x & DT$truth == 1)
-  })
+  n_pos <- sum(DT$truth == 1)
+  n_neg <- sum(DT$truth == 0)
+
+  setorder(DT, value)
+  DT[, cum_pos := cumsum(truth == 1)]
+  DT[, cum_neg := cumsum(truth == 0)]
+  counts <- DT[, .(cum_pos = cum_pos[.N], cum_neg = cum_neg[.N]), by = value]
+
+  # FN/TN = counts strictly below each threshold (shift by one)
+  n_thresh <- nrow(counts)
+  FN <- c(0L, counts$cum_pos[-n_thresh])
+  TN <- c(0L, counts$cum_neg[-n_thresh])
+  TP <- n_pos - FN
+  FP <- n_neg - TN
   random <- mean(DT$truth)
 
   # Assemble into DT and collapse to unique recall points
@@ -93,7 +94,7 @@ pr_network <- function(rds, gs, rlim = 0.25, plot = FALSE) {
     out[, TF := tf]
   } else {
     TF <- tf |>
-      subset(!is.na(.)) |>
+      na.omit() |>
       unique() |>
       paste(collapse = ",")
     out[, TF := TF]

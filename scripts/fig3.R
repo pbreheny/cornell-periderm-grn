@@ -288,14 +288,6 @@ pr_master_ko[, TF := factor(TF, levels = tf_levels, labels = tf_labels)]
 
 pr_plot(pr_master[strength == 1], group = "Network", facet = "TF", col = 4)
 
-# AUC line plots
-tb_auc <- auc_table(pr_master)
-tb_auc_ko <- auc_table(pr_master_ko)
-
-auc_plot(tb_auc, "method", "TF", "pAUC_Gain", ncol = 4)
-auc_plot(tb_auc_ko, "method", "TF", "pAUC_Gain", ncol = 4)
-
-
 # --- heat maps -------------------------------------------
 
 # combined chip+ko data
@@ -308,36 +300,3 @@ master_hm(pr_master[strength == 1], metric = "pAUC_Gain", grid = TRUE)
 
 # KO only
 master_hm(pr_master_ko[strength == 0.5], metric = "pAUC_Gain", grid = TRUE)
-
-# --- mini networks/subgraphs -----------------------------
-
-genes <- c(
-  "cebpb",
-  "gata3",
-  "grhl1",
-  "grhl3",
-  "irf6",
-  "klf6a",
-  "klf17",
-  "tead3b",
-  "tfap2a",
-  "zbtb10",
-  "znf750"
-)
-
-# network plot
-readRDS("network/wgcna/kna10-mc2-cor-s100.rds") |>
-  transform() |>
-  make_graph() |>
-  plot_modules(
-    genes = genes,
-    percentile = 0.1,
-    layout = "circle",
-    n_lab = 11,
-    background = "white"
-  )
-
-readRDS("network/wgcna/kna10-mc2-cor-s100.rds") |>
-  transform() |>
-  make_graph() |>
-  plot_modules(percentile = 0.1, n_lab = 11, background = "white")

@@ -33,7 +33,7 @@ rule fig3:
         ),
         expand(
             "network/inferelator/kna10-mc2-enet-a{eneta}.rds",
-            eneta = [a for a in alpha]
+            eneta = [a for a in alpha if a != "001"]
         )
     output:
         "figs/fig3.pdf"

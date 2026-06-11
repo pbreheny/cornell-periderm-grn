@@ -16,17 +16,17 @@ combine_gs <- function(gs1, gs2){
   gs[, truth := ifelse((gs$truth.x & gs$truth.y == 1), 1, 0)]
 
   Flank <- c(gs[['Flank.x']][1], gs[['Flank.y']][1]) |>
-    subset(!is.na(.)) |>
+    na.omit() |>
     unique() |>
     paste(collapse = ',')
 
   Threshold <- c(gs[['Threshold.x']][1], gs[['Threshold.y']][1]) |>
-    subset(!is.na(.)) |>
+    na.omit() |>
     unique() |>
     paste(collapse = ',')
 
   TF <- c(gs[['TF.x']][1], gs[['TF.y']][1]) |>
-    subset(!is.na(.)) |>
+    na.omit() |>
     unique() |>
     paste(collapse = ',')
 

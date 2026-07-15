@@ -28,7 +28,8 @@ From: bioconductor/r-ver:3.23
     )'
     Rscript -e 'BiocManager::install(c(
         "AnnotationDbi",
-        "DESeq2"
+        "DESeq2",
+        "GENIE3"
     ))'
 
     # Python packages

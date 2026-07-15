@@ -28,8 +28,8 @@ Prior <- import_prior(opt$prior, Data)
 id <- sprintf("%0.3d", as.integer(100 * as.numeric(opt$x)))
 if (opt$type == "bbsr") {
   fn <- glue::glue("network/inferelator/{opt$data}-{opt$prior}-{opt$type}-s{id}.rds")
-  fit_inferelator_network(Data, Prior, fn, type = "bbsr", strength = opt$x)
+  fit_inferelator_network(Data, Prior, fn, type = "bbsr", strength = as.numeric(opt$x))
 } else {
   fn <- glue::glue("network/inferelator/{opt$data}-{opt$prior}-{opt$type}-a{id}.rds")
-  fit_inferelator_network(Data, Prior, fn, type = "enet", alpha = opt$x)
+  fit_inferelator_network(Data, Prior, fn, type = "enet", alpha = as.numeric(opt$x))
 }

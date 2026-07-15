@@ -43,7 +43,9 @@ fit_inferelator_network <- function(
     cmd <- glue("scripts/fit-inferelator.py {prefix} enet {alpha} {reps}")
   }
   status <- system(cmd)
-  if (status != 0) stop("Error running python code: ", status)
+  if (status != 0) {
+    stop("Error running python code: ", status)
+  }
 
   # Process inferelator output
   x <- matrix(0, length(Data$Exp$Gene), length(Data$tf), dimnames = list(Data$Exp$Gene, Data$tf))

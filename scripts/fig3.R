@@ -1,7 +1,7 @@
 #' Create figure 3
 source("scripts/setup.R")
 
-# Import enrichment
+# --- Import enrichment -----
 enr <- import_enr()
 targets <- "./data/raw/TargetGenes_EVL_TRN_Full-Weak-StrongFiltered.xlsx" |>
   readxl::read_excel(range = "A1:A3788") |>
@@ -10,7 +10,7 @@ targets <- "./data/raw/TargetGenes_EVL_TRN_Full-Weak-StrongFiltered.xlsx" |>
   unique()
 N <- round(0.25 * length(targets))
 
-# KO gold standards
+# --- KO gold standards -----
 cebpb_KO_gs <- make_gs(
   "data/knockout/cebpb_KO.rds",
   metric = "lfsr",
@@ -89,95 +89,52 @@ grhl1_KO_gs <- make_gs(
   targets = targets
 )
 
-# chip gold standards
+# --- ChIP gold standards -----
 irf6_chip100kb_gs <- make_gs("data/chip/irf6_chip_100kb.rds", targets = targets)
-grhl3_chip100kb_gs <- make_gs(
-  "data/chip/grhl3_chip_100kb.rds",
-  targets = targets
-)
-tfap2a_chip100kb_gs <- make_gs(
-  "data/chip/tfap2a_chip_100kb.rds",
-  targets = targets
-)
+grhl3_chip100kb_gs <- make_gs("data/chip/grhl3_chip_100kb.rds", targets = targets)
+tfap2a_chip100kb_gs <- make_gs("data/chip/tfap2a_chip_100kb.rds", targets = targets)
 
-# chip + ko combined gold standards
+# --- ChIP + KO combined gold standards -----
 irf6_combo_100kb_gs <- combine_gs(irf6_chip100kb_gs, irf6_KO_gs)
 grhl3_combo_100kb_gs <- combine_gs(grhl3_chip100kb_gs, grhl3_KO_gs)
 tfap2a_combo_100kb_gs <- combine_gs(tfap2a_chip100kb_gs, tfap2a_KO_gs)
 
-# --- PR data tables ----------------------------
-# Combine chip + ko data
+# --- Precision-recall data: Combined -----
 
 # Entry for every network in gl-a001, wgcna, inferelator, and genie, collapsed over all TFs
 pr_combo <- combine_pr(
-  gs = list(
-    irf6_combo_100kb_gs,
-    grhl3_combo_100kb_gs,
-    tfap2a_combo_100kb_gs
-  ),
+  gs = list(irf6_combo_100kb_gs, grhl3_combo_100kb_gs, tfap2a_combo_100kb_gs),
   files = c(
-    list.files(
-      path = "network/gl",
-      pattern = "^kna10-mc2.*a001\\.rds$",
-      full.names = TRUE
-    ),
-    list.files(
-      path = "network/wgcna/",
-      pattern = "kna10-mc2-cor-*",
-      full.names = TRUE
-    ),
-    list.files(
-      path = "network/inferelator",
-      pattern = "kna10-mc2-*",
-      full.names = TRUE
-    ),
-    list.files(
-      path = "network/genie/",
-      pattern = "kna10-mc2-*",
-      full.names = TRUE
-    )
+    list.files(path = "network/gl", pattern = "^kna10-mc2.*a001\\.rds$", full.names = TRUE),
+    list.files(path = "network/wgcna", pattern = "kna10-mc2-cor-*", full.names = TRUE),
+    list.files(path = "network/inferelator", pattern = "kna10-mc2-*", full.names = TRUE),
+    list.files(path = "network/genie", pattern = "kna10-mc2-*", full.names = TRUE)
   ),
   collapse = TRUE
 )
 
 # entry for every network in gl-a001, wgcna, inferelator, and genie, separate for each TF
 pr_combo_sep <- combine_pr(
-  gs = list(
-    irf6_combo_100kb_gs,
-    grhl3_combo_100kb_gs,
-    tfap2a_combo_100kb_gs
-  ),
+  gs = list(irf6_combo_100kb_gs, grhl3_combo_100kb_gs, tfap2a_combo_100kb_gs),
   files = c(
-    list.files(
-      path = "network/gl",
-      pattern = "^kna10-mc2.*a001\\.rds$",
-      full.names = TRUE
-    ),
-    list.files(
-      path = "network/wgcna/",
-      pattern = "kna10-mc2-cor-*",
-      full.names = TRUE
-    ),
-    list.files(
-      path = "network/inferelator",
-      pattern = "kna10-mc2-*",
-      full.names = TRUE
-    ),
-    list.files(
-      path = "network/genie/",
-      pattern = "kna10-mc2-*",
-      full.names = TRUE
-    )
+    list.files(path = "network/gl", pattern = "^kna10-mc2.*a001\\.rds$", full.names = TRUE),
+    list.files(path = "network/wgcna", pattern = "kna10-mc2-cor-*", full.names = TRUE),
+    list.files(path = "network/inferelator", pattern = "kna10-mc2-*", full.names = TRUE),
+    list.files(path = "network/genie", pattern = "kna10-mc2-*", full.names = TRUE)
   ),
   collapse = FALSE
 )
 pr_master <- rbind(pr_combo, pr_combo_sep)
 pr_master[,
-  TF := factor(TF, levels = c("irf6,grhl3,tfap2a", "grhl3", "irf6", "tfap2a"))
+  TF := factor(
+    TF,
+    levels = c("irf6,grhl3,tfap2a", "grhl3", "irf6", "tfap2a"),
+    labels = c("Combined", "grhl3", "irf6", "tfap2a")
+  )
 ]
 
-### ko only data ###
-pr_combo_ko <- combine_pr(
+# --- Precision-recall data: KO only -----
+pr_ko <- combine_pr(
   gs = list(
     cebpb_KO_gs,
     gata3_KO_gs,
@@ -192,30 +149,14 @@ pr_combo_ko <- combine_pr(
     grhl1_KO_gs
   ),
   files = c(
-    list.files(
-      path = "network/gl",
-      pattern = "^kna10-mc2.*a001\\.rds$",
-      full.names = TRUE
-    ),
-    list.files(
-      path = "network/wgcna/",
-      pattern = "kna10-mc2-cor-*",
-      full.names = TRUE
-    ),
-    list.files(
-      path = "network/inferelator",
-      pattern = "kna10-mc2-*",
-      full.names = TRUE
-    ),
-    list.files(
-      path = "network/genie/",
-      pattern = "kna10-mc2-*",
-      full.names = TRUE
-    )
+    list.files(path = "network/gl", pattern = "^kna10-mc2.*a001\\.rds$", full.names = TRUE),
+    list.files(path = "network/wgcna", pattern = "kna10-mc2-cor-*", full.names = TRUE),
+    list.files(path = "network/inferelator", pattern = "kna10-mc2-*", full.names = TRUE),
+    list.files(path = "network/genie", pattern = "kna10-mc2-*", full.names = TRUE)
   ),
   collapse = TRUE
 )
-pr_combo_sep_ko <- combine_pr(
+pr_ko_sep <- combine_pr(
   gs = list(
     cebpb_KO_gs,
     gata3_KO_gs,
@@ -230,30 +171,14 @@ pr_combo_sep_ko <- combine_pr(
     grhl1_KO_gs
   ),
   files = c(
-    list.files(
-      path = "network/gl",
-      pattern = "^kna10-mc2.*a001\\.rds$",
-      full.names = TRUE
-    ),
-    list.files(
-      path = "network/wgcna/",
-      pattern = "kna10-mc2-cor-*",
-      full.names = TRUE
-    ),
-    list.files(
-      path = "network/inferelator",
-      pattern = "kna10-mc2-*",
-      full.names = TRUE
-    ),
-    list.files(
-      path = "network/genie/",
-      pattern = "kna10-mc2-*",
-      full.names = TRUE
-    )
+    list.files(path = "network/gl", pattern = "^kna10-mc2.*a001\\.rds$", full.names = TRUE),
+    list.files(path = "network/wgcna", pattern = "kna10-mc2-cor-*", full.names = TRUE),
+    list.files(path = "network/inferelator", pattern = "kna10-mc2-*", full.names = TRUE),
+    list.files(path = "network/genie", pattern = "kna10-mc2-*", full.names = TRUE)
   ),
   collapse = FALSE
 )
-pr_master_ko <- rbind(pr_combo_ko, pr_combo_sep_ko)
+pr_master_ko <- rbind(pr_ko, pr_ko_sep)
 tf_levels <- c(
   "cebpb,gata3,grhl3,irf6,klf17,tfap2a,znf750,zbtb10,tead3b,klf6a,grhl1",
   "cebpb",
@@ -284,8 +209,11 @@ tf_labels <- c(
 )
 pr_master_ko[, TF := factor(TF, levels = tf_levels, labels = tf_labels)]
 
-# --- plotting --------------------------------------------
+# --- Fig 3a -----
 
+table(pr_master$Network)
+pr_master[strength == 1] |> table()
+pr_master[method == "inferelator"]$strength |> table()
 pr_plot(pr_master[strength == 1], group = "Network", facet = "TF", col = 4)
 
 # --- heat maps -------------------------------------------

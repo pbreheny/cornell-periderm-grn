@@ -37,7 +37,6 @@ pr_plot <- function(DT, group, facet, col = 2) {
   }
   p <- ggplot(DT, aes(Recall, Precision, Group = .data[[group]], color = .data[[group]])) +
     geom_line()
-  # + ggtitle(title)
   if (missing(facet)) {
     p <- p + geom_hline(aes(yintercept = (Random)), lty = 2, col = "darkgray")
   } else {

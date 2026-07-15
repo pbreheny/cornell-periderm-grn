@@ -85,8 +85,6 @@ rule inferelator_enet:
         "scripts/fit-inferelator enet kna10 mc2 {params.eneta_dec}"
 
 rule wgcna:
-    input:
-        "scripts/wgcna.R"
     output:
         expand(
             "network/wgcna/kna10-mc2-cor-s{strength}.rds",

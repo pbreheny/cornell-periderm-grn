@@ -31,10 +31,6 @@ rule fig3:
             "network/inferelator/kna10-mc2-bbsr-s{bbsrs}.rds",
             bbsrs = [s for s in strength]
         ),
-        expand(
-            "network/inferelator/kna10-mc2-enet-a{eneta}.rds",
-            eneta = [a for a in alpha if a != "001"]
-        )
     output:
         "figs/fig3.pdf"
     script:

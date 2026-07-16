@@ -12,14 +12,13 @@ Filter at 10%
 ## Top (a)
 
 - [x] network/wgcna//kna10
-- [ ] Why no inferelator?
-  - [ ] Fix coercion to string
-    - [ ] alpha
-    - [ ] strength
-    - [ ]
+- [x] Why no inferelator?
+  - [x] Fix coercion to string
+    - [x] alpha
+    - [x] strength
 - [ ] Add GENIE to Snakemake
   - [ ] Rebuild container
-- [ ] Fix legend appearance
-- [ ] Double-check with table()
+- [x] Fix legend appearance
+- [x] Double-check with table()
 
 ## Middle (b)

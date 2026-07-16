@@ -5,6 +5,7 @@
 source("scripts/setup.R")
 library(GENIE3)
 filter <- 0.10
+dir.create("network/genie", recursive = TRUE, showWarnings = FALSE)
 
 # Fit networks
 kna <- import_expr('kenny', 'none', 'all', filter = filter)

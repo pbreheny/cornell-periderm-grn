@@ -95,7 +95,7 @@ rule wgcna:
 rule genie:
     output:
         expand(
-            "network/wgcna/kna10-mc2-gne-s{strength}.rds",
+            "network/genie/kna10-mc2-gne-s{strength}.rds",
             strength = strength
         )
     script: "scripts/genie.R"

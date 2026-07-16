@@ -31,6 +31,10 @@ rule fig3:
             "network/inferelator/kna10-mc2-bbsr-s{bbsrs}.rds",
             bbsrs = [s for s in strength]
         ),
+        expand(
+            "network/genie/kna10-mc2-gne-s{gs}.rds",
+            gs = [s for s in strength]
+        )
     output:
         "figs/fig3.pdf"
     script:
@@ -87,3 +91,11 @@ rule wgcna:
             strength = strength
         )
     script: "scripts/wgcna.R"
+
+rule genie:
+    output:
+        expand(
+            "network/wgcna/kna10-mc2-gne-s{strength}.rds",
+            strength = strength
+        )
+    script: "scripts/genie.R"

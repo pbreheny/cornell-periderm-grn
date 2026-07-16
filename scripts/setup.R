@@ -8,6 +8,9 @@ library(igraph)
 library(ncvreg)
 library(stringr)
 
+# ggplot theme
+theme_set(theme_minimal())
+
 # Source functions
 for (f in list.files("R", pattern = "\\.[Rr]$", full.names = TRUE)) {
   source(f)

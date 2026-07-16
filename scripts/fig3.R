@@ -211,10 +211,12 @@ pr_master_ko[, TF := factor(TF, levels = tf_levels, labels = tf_labels)]
 
 # --- Fig 3a -----
 
-table(pr_master$Network)
-pr_master[strength == 1] |> table()
-pr_master[method == "inferelator"]$strength |> table()
-pr_plot(pr_master[strength == 1], group = "Network", facet = "TF", col = 4)
+pr_master[strength == 1] |>
+  _[Network == "network/gl/kna10-mc2-s100-a001.rds", Network := "gLASSO"] |>
+  _[Network == "network/inferelator/kna10-mc2-bbsr-s100.rds", Network := "Inferelator 3.0"] |>
+  _[Network == "network/wgcna/kna10-mc2-cor-s100.rds", Network := "WGCNA"] |>
+  pr_plot(group = "Network", facet = "TF", col = 4) +
+  guides(color = guide_legend(title = ""))
 
 # --- heat maps -------------------------------------------
 

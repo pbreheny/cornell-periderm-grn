@@ -93,6 +93,7 @@ rule wgcna:
     script: "scripts/wgcna.R"
 
 rule genie:
+    threads: 10
     output:
         expand(
             "network/genie/kna10-mc2-gne-s{strength}.rds",

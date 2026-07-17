@@ -6,6 +6,7 @@
 #' Output: `network/wgcna/*`
 source("scripts/setup.R")
 filter <- 0.10
+dir.create("network/wgcna", recursive = TRUE, showWarnings = FALSE)
 
 # Fit networks
 # cor = correlation

@@ -213,20 +213,28 @@ pr_master_ko[, TF := factor(TF, levels = tf_levels, labels = tf_labels)]
 
 pr_master[strength == 1] |>
   _[Network == "network/gl/kna10-mc2-s100-a001.rds", Network := "gLASSO"] |>
+  _[Network == "network/genie/kna10-mc2-gne-s100.rds", Network := "GENIE3"] |>
   _[Network == "network/inferelator/kna10-mc2-bbsr-s100.rds", Network := "Inferelator 3.0"] |>
   _[Network == "network/wgcna/kna10-mc2-cor-s100.rds", Network := "WGCNA"] |>
   pr_plot(group = "Network", facet = "TF", col = 4) +
   guides(color = guide_legend(title = ""))
 
-# --- heat maps -------------------------------------------
+# --- Fig 3b -----
 
-# combined chip+ko data
+pr_master[TF != "Combined"] |>
+  _[strength %in% 0:4] |>
+  _[method == "glasso", method := "gLASSO"] |>
+  _[method == "genie", method := "GENIE3"] |>
+  _[method == "inferelator", method := "Inferelator"] |>
+  _[method == "cor", method := "WGCNA"] |>
+  master_hm(metric = "pAUC_Gain", grid = FALSE)
 
-# all prior strengths
-master_hm(pr_master, metric = "pAUC_Gain", grid = TRUE)
+# --- Fig 3c -----
 
-# only prior strengths 1, 2, 3, 4
-master_hm(pr_master[strength == 1], metric = "pAUC_Gain", grid = TRUE)
-
-# KO only
-master_hm(pr_master_ko[strength == 0.5], metric = "pAUC_Gain", grid = TRUE)
+pr_master_ko[!(TF %in% c("combined", "irf6", "grhl3", "tfap2a"))] |>
+  _[strength %in% 0:4] |>
+  _[method == "glasso", method := "gLASSO"] |>
+  _[method == "genie", method := "GENIE3"] |>
+  _[method == "inferelator", method := "Inferelator"] |>
+  _[method == "cor", method := "WGCNA"] |>
+  master_hm(metric = "pAUC_Gain", grid = FALSE)

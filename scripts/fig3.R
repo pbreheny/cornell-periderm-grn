@@ -211,7 +211,7 @@ pr_master_ko[, TF := factor(TF, levels = tf_levels, labels = tf_labels)]
 
 # --- Fig 3a -----
 
-pr_master[strength == 1] |>
+f3a <- pr_master[strength == 1] |>
   _[Network == "network/gl/kna10-mc2-s100-a001.rds", Network := "gLASSO"] |>
   _[Network == "network/genie/kna10-mc2-gne-s100.rds", Network := "GENIE3"] |>
   _[Network == "network/inferelator/kna10-mc2-bbsr-s100.rds", Network := "Inferelator 3.0"] |>
@@ -221,7 +221,7 @@ pr_master[strength == 1] |>
 
 # --- Fig 3b -----
 
-pr_master[TF != "Combined"] |>
+f3b <- pr_master[TF != "Combined"] |>
   _[strength %in% 0:4] |>
   _[method == "glasso", method := "gLASSO"] |>
   _[method == "genie", method := "GENIE3"] |>
@@ -231,10 +231,12 @@ pr_master[TF != "Combined"] |>
 
 # --- Fig 3c -----
 
-pr_master_ko[!(TF %in% c("combined", "irf6", "grhl3", "tfap2a"))] |>
+f3c <- pr_master_ko[!(TF %in% c("combined", "irf6", "grhl3", "tfap2a"))] |>
   _[strength %in% 0:4] |>
   _[method == "glasso", method := "gLASSO"] |>
   _[method == "genie", method := "GENIE3"] |>
   _[method == "inferelator", method := "Inferelator"] |>
   _[method == "cor", method := "WGCNA"] |>
   master_hm(metric = "pAUC_Gain", grid = FALSE)
+
+ggsave("figs/fig3.pdf", f3a / f3b / f3c, width = 8, height = 10)

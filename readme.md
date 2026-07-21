@@ -20,6 +20,8 @@ snakemake figs/fig6.pdf
 
 Snakemake will determine which upstream steps (network fitting, etc.) are needed and run them in the correct order.
 
+**Warning:** Note that Figure 3 in particular takes a very long time to create, as it involves fitting dozens of networks.
+
 ## Container (recommended)
 
 The Snakefile is configured to run all rules inside an [Apptainer](https://apptainer.org) container, which provides a fully reproducible software environment. To build the container:
@@ -40,23 +42,29 @@ If you prefer to use your own R and Python installations, you can run Snakemake 
 
 **R packages** (install via `install.packages()` / `BiocManager::install()`):
 
-| Package | Source |
-|---------|--------|
-| ashr | CRAN |
-| data.table | CRAN |
-| forcats | CRAN |
-| glmnet | CRAN |
-| glue | CRAN |
-| ggplot2 | CRAN |
-| ggraph | CRAN |
-| igraph | CRAN |
-| ncvreg | CRAN |
-| readxl | CRAN |
-| shadowtext | CRAN |
-| stringr | CRAN |
-| MetBrewer | CRAN |
+| Package       | Source       |
+| ------------- | ------------ |
+| ashr          | CRAN         |
+| data.table    | CRAN         |
+| docopt        | CRAN         |
+| doParallel    | CRAN         |
+| doRNG         | CRAN         |
+| forcats       | CRAN         |
+| glmnet        | CRAN         |
+| glue          | CRAN         |
+| ggplot2       | CRAN         |
+| ggraph        | CRAN         |
+| igraph        | CRAN         |
+| ncvreg        | CRAN         |
+| patchwork     | CRAN         |
+| readxl        | CRAN         |
+| shadowtext    | CRAN         |
+| stringr       | CRAN         |
+| MetBrewer     | CRAN         |
+| R.utils       | CRAN         |
 | AnnotationDbi | Bioconductor |
-| DESeq2 | Bioconductor |
+| DESeq2        | Bioconductor |
+| GENIE3        | Bioconductor |
 
 **Python packages**:
 

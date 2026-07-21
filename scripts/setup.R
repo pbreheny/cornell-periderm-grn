@@ -6,6 +6,7 @@ library(ggplot2)
 library(ggraph)
 library(igraph)
 library(ncvreg)
+library(patchwork)
 library(stringr)
 
 # ggplot theme

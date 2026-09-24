@@ -12,16 +12,23 @@
 #' tfap2a_chip10kb_gs <- make_gs('data/chip/tfap2a_chip_10kb.rds')
 #' grhl3_chip10kb_gs <- make_gs('data/chip/grhl3_chip_10kb.rds')
 #'
-#' allChip_100kb_gs <- suppressWarnings(many_tf_gs(list(irf6_chip10kb_gs, grhl3_chip10kb_gs, tfap2a_chip10kb_gs)))
-#' combine_pr_manyTF(c('network/gl/fns-atac-s1.rds', 'network/gl/fns-atac-s4.rds'), allChip_100kb_gs)
+#' allChip_100kb_gs <- many_tf_gs(list(
+#'   irf6_chip10kb_gs, grhl3_chip10kb_gs, tfap2a_chip10kb_gs
+#' )) |> suppressWarnings()
+#' combine_pr_manyTF(
+#'   c(
+#'     "network/gl/kna10-mc2-s100-a100.rds",
+#'     "network/gl/kna10-mc2-s100-a100.rds"
+#'   ),
+#'   allChip_100kb_gs
+#' )
 #' @export
 
-combine_pr_manyTF <- function(files, gs, rlim=0.25) {
-  out <- lapply(seq_along(files), function(i) pr_network(files[i], gs, rlim, plot=FALSE)[-1]) |>
+combine_pr_manyTF <- function(files, gs, rlim = 0.25) {
+  out <- lapply(seq_along(files), function(i) pr_network(files[i], gs, rlim, plot = FALSE)[-1]) |>
     rbindlist(fill = TRUE)
   out <- out[is.finite(Precision) & Recall != 0]
   attr(out, 'random') <- mean(gs$truth)
 
   out
 }
-

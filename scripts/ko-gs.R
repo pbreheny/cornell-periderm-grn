@@ -1,6 +1,3 @@
-#' Annika: What does this script do?
-#' And can it have a better filename??
-
 source("scripts/setup.R")
 library(DESeq2)
 library(org.Dr.eg.db)
@@ -9,10 +6,10 @@ library(readxl)
 # Setup -------------------------------------------------------------------
 
 # Analyze Irf6 knockout experiment with DESeq2
-colData <- data.frame("condition" = factor(c(rep("WT", 4), rep("Mutant", 4))),
+colData <- data.frame("condition" = factor(c(rep("WT", 4), rep("Mutant", 4)), levels = c("WT", "Mutant")),
                       "batch" = factor(rep(c("A", "B", "C", "D"), 2)),
                       row.names = c("WT1", "WT2", "WT3", "WT4",
-                                    "irf6_matMutant1", "irf6_matMutant2", "irf6_matMutant",
+                                    "irf6_matMutant1", "irf6_matMutant2", "irf6_matMutant3",
                                     "irf6_matMutant4"))
 countData <- readxl::read_excel("data/raw/countData_All_KO_MO_RNAseq_corrected_7AUG23.xlsx", sheet = "irf6MatMutant_vs_WT", skip = 1)
 M <- as.matrix(countData[,-1])
@@ -22,7 +19,7 @@ dds <- DESeqDataSetFromMatrix(countData = M,
                               colData = colData,
                               design = ~ condition + batch)
 dds <- DESeq(dds)
-irf6_res <- results(dds, name = "condition_WT_vs_Mutant")
+irf6_res <- results(dds, name = "condition_Mutant_vs_WT")
 
 # Analyze tfap2a knockout experiment with DESeq2
 colData <- data.frame("condition" = factor(c(rep("CT", 3), rep("MO", 3))),
@@ -218,7 +215,7 @@ saveRDS(grhl1_gs, 'data/knockout/grhl1_KO.rds')
 
 
 ### KLF17 ###
-klf17_gs <- stage_KO(DESeq2_result = irf6_res, TF = 'klf17', target_genes = targets,
+klf17_gs <- stage_KO(DESeq2_result = klf17_res, TF = 'klf17', target_genes = targets,
                     restrict = TRUE)
 saveRDS(klf17_gs, 'data/knockout/klf17_KO.rds')
 
@@ -232,12 +229,12 @@ tead3b_gs <- stage_KO(DESeq2_result = tead3b_res, TF = 'tead3b', target_genes = 
                     restrict = TRUE)
 saveRDS(tead3b_gs, 'data/knockout/tead3b_KO.rds')
 
-### IRF6 ###
+### ZBTB10 ###
 zbtb10_gs <- stage_KO(DESeq2_result = zbtb10_res, TF = 'zbtb10', target_genes = targets,
                     restrict = TRUE)
 saveRDS(zbtb10_gs, 'data/knockout/zbtb10_KO.rds')
 
-### IRF6 ###
+### CEBPB ###
 cebpb_gs <- stage_KO(DESeq2_result = cebpb_res, TF = 'cebpb', target_genes = targets,
                     restrict = TRUE)
 saveRDS(cebpb_gs, 'data/knockout/cebpb_KO.rds')
@@ -251,20 +248,3 @@ saveRDS(gata3_gs, 'data/knockout/gata3_KO.rds')
 znf750_gs <- stage_KO(DESeq2_result = znf750_res, TF = 'znf750', target_genes = targets,
                     restrict = TRUE)
 saveRDS(znf750_gs, 'data/knockout/znf750_KO.rds')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

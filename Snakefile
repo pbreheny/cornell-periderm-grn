@@ -9,6 +9,10 @@ strength = ["000", "050", "100", "150", "200", "250", "300", "350", "400"]
 alpha = ["001", "025", "050", "075", "100"]
 gl_grid = list(product(strength, alpha))
 
+# TFs with knockout/knockdown RNA-seq experiments
+ko_tfs = ["irf6", "tfap2a", "grhl3", "grhl1", "klf6a", "klf17", "tead3b",
+          "zbtb10", "cebpb", "gata3", "znf750"]
+
 
 # --- Rules --------------------------------------
 
@@ -34,7 +38,8 @@ rule fig3:
         expand(
             "network/genie/kna10-mc2-gne-s{gs}.rds",
             gs = [s for s in strength]
-        )
+        ),
+        expand("data/knockout/{tf}_KO.rds", tf = ko_tfs)
     output:
         "figs/fig3.pdf"
     script:
@@ -56,6 +61,13 @@ rule fig6:
         "network/wgcna/kna10-mc2-cor-s100.rds"
     output: "figs/fig6.pdf"
     script: "scripts/fig6.R"
+
+rule ko_gs:
+    input:
+        "data/raw/countData_All_KO_MO_RNAseq_corrected_7AUG23.xlsx"
+    output:
+        expand("data/knockout/{tf}_KO.rds", tf = ko_tfs)
+    script: "scripts/ko-gs.R"
 
 rule glasso:
     output:
